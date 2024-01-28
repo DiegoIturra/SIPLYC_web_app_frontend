@@ -1,9 +1,35 @@
 import { useState } from "react";
 import * as XLSX from 'xlsx';
-// import { saveAs } from "file-saver";
 
 const FileUploader = () => {
   const [excelData, setExcelData] = useState([]);
+
+  const createPayload = () => {
+    const payload = [];
+  
+    excelData.forEach((row, index) => {
+      if (index > 1) {
+        const [ciudad, jardin, nombres, apellido_paterno, apellido_materno, rut, grupo_edad, educadora] = row;
+  
+        const json = {
+          ciudad,
+          jardin,
+          nombres,
+          apellido_paterno,
+          apellido_materno,
+          rut,
+          grupo_edad,
+          educadora,
+        };
+  
+        payload.push(json);
+      }
+    });
+
+    payload.map(el => console.log(el))
+
+    return payload;
+  }
 
   const handleFileChange = e => {
     const file = e.target.files[0];
@@ -23,13 +49,13 @@ const FileUploader = () => {
       };
 
       reader.readAsBinaryString(file);
-
     }
   }
 
   return (
     <div>
       <input type="file" onChange={handleFileChange}/>
+      <button onClick={createPayload}>show data</button>
 
       {
         excelData.length > 0 && (
