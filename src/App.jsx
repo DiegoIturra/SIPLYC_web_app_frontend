@@ -7,8 +7,8 @@ function App() {
     <>
       <NavBar/>
 
-      <div>
-        <h1>Hola mundo</h1>
+      <div className='mt-4'>
+        <h1 className='d-flex justify-content-center'>Hola mundo</h1>
       </div>
     </>
   )
