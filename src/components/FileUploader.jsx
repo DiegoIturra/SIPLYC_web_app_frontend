@@ -55,19 +55,49 @@ const FileUploader = () => {
   return (
     <div>
       <input type="file" onChange={handleFileChange}/>
-      <button onClick={createPayload}>show data</button>
+      <button onClick={createPayload}>Enviar Datos</button>
 
       {
         excelData.length > 0 && (
           <div>
-            <h3>Contenido del archivo excel: </h3>
-            <ul>
+            <h3 className="d-flex justify-content-center">Contenido del archivo excel: </h3>
+
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Ciudad</th>
+                  <th scope="col">Jardín</th>
+                  <th scope="col">Nombres</th>
+                  <th scope="col">Apellido Paterno</th>
+                  <th scope="col">Apellido Materno</th>
+                  <th scope="col">Rut</th>
+                  <th scope="col">Grupo Edad</th>
+                  <th scope="col">Educadora</th>
+                </tr>
+              </thead>
+
+              <tbody>
               {
                 excelData.map((row, index) => (
-                  <li key={index}>{JSON.stringify(row)}</li>
+                  (index !== 0 && index !== 1) && (
+                    <tr key={index}>
+                      <th scope="row">{index - 2}</th>
+                      <th scope="row">{row[0]}</th>
+                      <th scope="row">{row[1]}</th>
+                      <th scope="row">{row[2]}</th>
+                      <th scope="row">{row[3]}</th>
+                      <th scope="row">{row[4]}</th>
+                      <th scope="row">{row[5]}</th>
+                      <th scope="row">{row[6]}</th>
+                      <th scope="row">{row[7]}</th>
+                    </tr>
+                  )
                 ))
               }
-            </ul>
+              </tbody>
+            </table>
+
           </div>
         )
       }
