@@ -1,6 +1,28 @@
+import { useState } from 'react';
+import { useForm } from '../../hooks/useForm';
 import './styles.css'
 
 const LoginForm = () => {
+
+  const { email, password, onInputChange } = useForm({
+    email: '',
+    password: '',
+  })
+
+  const [ credentials, setCredentials ] = useState({
+    email: '',
+    password: ''
+  })
+
+  const onFormSubmit = (event) => {
+    event.preventDefault()
+    
+    setCredentials({
+      email,
+      password
+    })
+  }
+
   return (
     <div className='main-container'>
       
@@ -16,20 +38,24 @@ const LoginForm = () => {
           
           <h4>Sign In</h4>
 
-          <form action="" className='form'>
+          <form onChange={onFormSubmit} className='form'>
 
             <input 
               type="text" 
               placeholder="Email" 
-              name='Email'
+              name='email'
+              value={email}
               className="form-control"
+              onChange={onInputChange}
             />
 
             <input 
               type="password" 
               placeholder="Password"
-              name='Password' 
+              name='password' 
+              value={password}
               className="form-control"
+              onChange={onInputChange}
             />
 
             <button 
