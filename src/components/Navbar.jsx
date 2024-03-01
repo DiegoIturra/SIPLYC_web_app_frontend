@@ -11,11 +11,11 @@ export const NavBar = () => {
           
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav">
-              <a className="nav-link active" aria-current="page" href="#">Home</a>
-              <a className="nav-link" href="#">Niños</a>
-              <a className="nav-link" href="#">Educadoras</a>
-              <a className="nav-link" href="#">Jardín</a>
-              <a className="nav-link" href="#">Nómina</a>
+              <a className="nav-link active" aria-current="page" href="home">Home</a>
+              <a className="nav-link" href="children">Niños</a>
+              <a className="nav-link" href="teachers">Educadoras</a>
+              <a className="nav-link" href="kinderGardens">Jardín</a>
+              <a className="nav-link" href="home">Nómina</a>
             </div>
           </div>
 
