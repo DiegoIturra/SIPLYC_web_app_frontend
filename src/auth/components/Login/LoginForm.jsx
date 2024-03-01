@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from '../../../hooks/useForm';
 import './styles.css'
 
@@ -22,6 +23,14 @@ const LoginForm = () => {
     setCredentials({
       email,
       password
+    })
+  }
+
+  const navigate = useNavigate();
+
+  const onLogin = () => {
+    navigate('/home', {
+      replace: true
     })
   }
 
@@ -63,6 +72,7 @@ const LoginForm = () => {
             <button 
               type="submit" 
               className="login-button"
+              onClick={onLogin}
             >
             Log in
             </button>
