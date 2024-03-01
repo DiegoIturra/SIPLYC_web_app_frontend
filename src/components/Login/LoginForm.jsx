@@ -16,7 +16,9 @@ const LoginForm = () => {
 
   const onFormSubmit = (event) => {
     event.preventDefault()
-    
+
+    console.log(credentials); //Delete unnecesary log
+
     setCredentials({
       email,
       password
@@ -30,7 +32,7 @@ const LoginForm = () => {
 
         {/* div for image */}
         <div className='image-div'>
-          <img src='/public/img/login-image.png' alt='image for login'/>
+          <img src='/img/login-image.png' alt='image for login'/>
         </div>
 
         {/* div for login form */}
