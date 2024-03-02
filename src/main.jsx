@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-
-//Imports for testing components
-import FileUploader from './components/FileUploader.jsx'
+import { SiplycApp } from './SiplycApp'
+import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <FileUploader />
+    <BrowserRouter>
+      <SiplycApp/>
+    </BrowserRouter>
   </React.StrictMode>,
 )
