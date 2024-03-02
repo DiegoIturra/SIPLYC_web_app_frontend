@@ -20,13 +20,14 @@ export const NavBar = () => {
             <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/children">Niños</NavLink>
             <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/kinderGardens">Jardines</NavLink>
             <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/teachers">Tutores</NavLink>
+            <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/files">Nomina</NavLink>
           </div>
         </div>
 
         <div className="navbar-collapse collapse w-100 order-3 dual-collapse2 d-flex justify-content-end">
           <ul className="navbar-nav ml-auto">
             <span className='nav-item nav-link text-primary'>currentUser</span>
-            <button className='nav-item nav-link btn' onClick={onLogout}>Logout</button>
+            <button className='nav-item nav-link btn' onClick={onLogout}>Log out</button>
           </ul>
         </div>
       </nav>

@@ -1,0 +1,5 @@
+.data-table-container {
+  flex-grow: 1;
+  overflow-y: scroll;
+  margin-bottom: 40px;
+}
