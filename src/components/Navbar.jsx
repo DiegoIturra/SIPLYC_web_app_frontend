@@ -21,6 +21,7 @@ export const NavBar = () => {
             <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/kinderGardens">Jardines</NavLink>
             <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/teachers">Tutores</NavLink>
             <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/files">Nomina</NavLink>
+            <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/graphics">Gráficos</NavLink>
           </div>
         </div>
 
