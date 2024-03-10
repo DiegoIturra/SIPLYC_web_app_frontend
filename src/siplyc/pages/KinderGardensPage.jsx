@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 export const KinderGardensPage = () => {
 
   const fetchItems = async () => {
+    // TODO: Replace raw string with enviroment variable
     const response = await fetch('http://127.0.0.1:3000/kinder_gardens')
     const data = await response.json()
     return data
