@@ -11,6 +11,14 @@ export const KinderGardensPage = () => {
     return data
   }
 
+  const properties = [
+    { label: 'Nombre', key: 'name' },
+    { label: 'Dirección', key: 'address' },
+    { label: 'Teléfono', key: 'phone' },
+    { label: 'Ciudad', key: 'city_name' },
+    { label: 'Acciones', key: 'actions' }
+  ]
+
   const { isLoading, error, data } = useQuery('repoData', fetchItems);
 
   const [items, setItems] = useState([]);
@@ -37,7 +45,7 @@ export const KinderGardensPage = () => {
 
       <div className="container mt-4 pb-4 d-flex justify-content-center align-items-center">
         <div className="col-7">
-          <List items={items} onDelete={handleDelete}/>
+          <List properties={properties} items={items} onDelete={handleDelete}/>
         </div>
       </div>
     </div>
