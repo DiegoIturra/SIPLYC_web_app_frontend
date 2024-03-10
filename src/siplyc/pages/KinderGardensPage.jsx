@@ -1,28 +1,30 @@
-import { useState } from "react";
 import { List } from "../components/List"
+import { useQuery } from "react-query";
+import { useState, useEffect } from "react";
 
 export const KinderGardensPage = () => {
 
-  //TODO: Replace with items from database
-  const initialItems = [
-    { id: 1, name: 'Jardin de niños "Niños Heroes"' },
-    { id: 2, name: 'Jardin de niños "Josefa Ortiz de Dominguez"' },
-    { id: 3, name: 'Jardin de niños "Miguel Hidalgo"' },
-    { id: 4, name: 'Jardin de niños "Benito Juarez"' },
-    { id: 5, name: 'Jardin de niños "Francisco I. Madero"' },
-    { id: 6, name: 'Jardin de niños "Lazaro Cardenas"' },
-    { id: 7, name: 'Jardin de niños "Venustiano Carranza"' },
-    { id: 8, name: 'Jardin de niños "Adolfo Lopez Mateos"' },
-    { id: 9, name: 'Jardin de niños "Plutarco Elias Calles"' },
-    { id: 10, name: 'Jardin de niños "Emiliano Zapata"' },
-  ];
-
-  const [items, setItems] = useState(initialItems);
-
-  const handleDelete = (id) => {
-    const newItems = items.filter(item => item.id !== id);
-    setItems(newItems);
+  const fetchItems = async () => {
+    const response = await fetch('http://127.0.0.1:3000/kinder_gardens')
+    const data = await response.json()
+    return data
   }
+
+  const { isLoading, error, data } = useQuery('repoData', fetchItems);
+
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      setItems(data);
+    }
+  }, [data]);
+
+  const handleDelete = (id) => setItems(prevItems => prevItems.filter(item => item.id !== id))
+
+  if (isLoading) return 'Loading...'
+
+  if (error) return 'An error has occurred: ' + error.message
 
   return (
     <div style={{ backgroundColor: '#00ac96', minHeight: '100vh' }}>

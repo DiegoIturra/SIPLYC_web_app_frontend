@@ -5,7 +5,7 @@ export const List = ({ items, onDelete }) => {
     <ul className="list-group">
       {
         items.map((item, index) => (
-          <Item key={index} item={item} onDelete={onDelete}/>
+          <Item key={index} item={item} onDelete={id => onDelete(id)}/>
         ))
       }
     </ul>
