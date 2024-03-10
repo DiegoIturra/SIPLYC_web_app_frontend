@@ -5,6 +5,7 @@ import { ChildrenPage } from "../pages/ChildrenPage"
 import { KinderGardensPage } from "../pages/KinderGardensPage"
 import { TeachersPage } from "../pages/TeachersPage"
 import { FilesPage } from "../pages/FilesPage"
+import { GraphicsPage } from "../pages/GraphicsPage"
 
 export const SiplycRoutes = () => {
   return(
@@ -18,6 +19,7 @@ export const SiplycRoutes = () => {
           <Route path="kinderGardens" element={<KinderGardensPage/>} />
           <Route path="teachers" element={<TeachersPage/>} />
           <Route path="files" element={<FilesPage/>}/>
+          <Route path="graphics" element={<GraphicsPage/>}/>
           <Route path="/" element={<Navigate to="/home" />}/>
         </Routes>
       </div>
