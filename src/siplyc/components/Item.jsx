@@ -1,10 +1,10 @@
 import { BsPencilFill } from "react-icons/bs";
 import { FaTrashAlt } from "react-icons/fa";
 
-export const Item = ({ item }) => {
+export const Item = ({ item, onDelete }) => {
   return (
     <li className="list-group-item d-flex justify-content-between">
-      <span className="align-self-center">{item}</span>
+      <span className="align-self-center">{item.name}</span>
 
       <div className="d-flex justify-content-evenly">
       
@@ -12,7 +12,7 @@ export const Item = ({ item }) => {
           <BsPencilFill />
         </button>
         
-        <button className="btn btn-danger ms-2">
+        <button className="btn btn-danger ms-2" onClick={() => onDelete(item.id)}>
           <FaTrashAlt />
         </button>
       
