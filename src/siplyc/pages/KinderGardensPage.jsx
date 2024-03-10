@@ -8,6 +8,10 @@ export const KinderGardensPage = () => {
     <div style={{ backgroundColor: '#00ac96', minHeight: '100vh' }}>
       <h1 className="container pt-4 d-flex justify-content-center align-items-center">Jardines</h1>
 
+      <div className="ontainer pt-4 d-flex justify-content-center align-items-center">
+        <button className="btn btn-primary">Nuevo +</button>
+      </div>
+
       <div className="container mt-4 pb-4 d-flex justify-content-center align-items-center">
         <div className="col-7">
           <List items={items}/>
