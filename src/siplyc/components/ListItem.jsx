@@ -1,7 +1,7 @@
 import { BsPencilFill } from "react-icons/bs";
 import { FaTrashAlt } from "react-icons/fa";
 
-export const ListItem = ({ properties, item, onDelete }) => {
+export const ListItem = ({ properties, item, onDelete, handleOpenModal }) => {
   return (
     <tr>                
       {
@@ -14,7 +14,7 @@ export const ListItem = ({ properties, item, onDelete }) => {
             <td key={index} scope="row">
               <div className="d-flex justify-content-evenly">
     
-                <button className="btn btn-warning me-2">
+                <button onClick={() => handleOpenModal(item.id)} className="btn btn-warning me-2">
                   <BsPencilFill />
                 </button>
                 

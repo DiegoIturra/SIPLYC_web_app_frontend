@@ -1,6 +1,7 @@
 import { List } from "../components/List"
 import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
+import { Modal } from "../components/Modal/Modal";
 
 export const KinderGardensPage = () => {
 
@@ -22,6 +23,25 @@ export const KinderGardensPage = () => {
   const { isLoading, error, data } = useQuery('repoData', fetchItems);
 
   const [items, setItems] = useState([]);
+
+  // Modal options
+  const [modalOpen, setModalOpen] = useState(false);
+  const [itemId, setItemId] = useState('');
+
+  const handleOpenModal = (itemId) => {
+    setModalOpen(true);
+    setItemId(itemId);
+    console.log(`item id: ${itemId}`);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleSaveModal = (formData) => {
+    // Realiza acciones con los datos del formulario aquí
+    console.log('Datos guardados:', formData);
+  };
 
   useEffect(() => {
     if (data) {
@@ -45,9 +65,11 @@ export const KinderGardensPage = () => {
 
       <div className="container mt-4 pb-4 d-flex justify-content-center align-items-center">
         <div className="col-7">
-          <List properties={properties} items={items} onDelete={handleDelete}/>
+          <List properties={properties} items={items} onDelete={handleDelete} handleOpenModal={handleOpenModal}/>
         </div>
       </div>
+
+      <Modal isOpen={modalOpen} onClose={handleCloseModal} onSave={handleSaveModal} selectedItemId={itemId}/>
     </div>
   )
 }

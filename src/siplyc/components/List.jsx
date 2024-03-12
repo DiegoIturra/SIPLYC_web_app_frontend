@@ -1,6 +1,6 @@
 import { ListItem } from "./ListItem";
 
-export const List = ({ properties = [], items = [], onDelete = () => {} }) => {
+export const List = ({ properties = [], items = [], onDelete = () => {}, handleOpenModal }) => {
   return (
     <>
       <table className="table">
@@ -17,7 +17,7 @@ export const List = ({ properties = [], items = [], onDelete = () => {} }) => {
         <tbody>
           {
             items.map((item, index) => (
-              <ListItem key={index} properties={properties} item={item} onDelete={onDelete}/>
+              <ListItem key={index} properties={properties} item={item} onDelete={onDelete} handleOpenModal={handleOpenModal}/>
             ))
           }
         </tbody>
