@@ -1,18 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './Modal.css';
 
-export const Modal = ({ isOpen, onClose, onSave, selectedItemId }) => {
+export const Modal = ({ isOpen, onClose, onSave, item }) => {
   
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    id: '',
+    name: '',
+    address: '',
+    phone: '',
+    city: ''
+  });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  useEffect(() => {
+    
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      id: item.id,
+      name: item.name,
+      address: item.address,
+      phone: item.phone,
+      city: item.city_name
+    }));
+
+  }, [item]);
+  
+  const { name, address, phone, city } = formData;
+
+  const onInputChange = ({ target }) => {
+    const { name, value } = target;
+    setFormData({
+      ...formData,
+      [ name ]: value
+    })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí puedes realizar acciones con los datos del formulario antes de cerrar el modal
     onSave(formData);
     onClose();
   };
@@ -21,16 +44,34 @@ export const Modal = ({ isOpen, onClose, onSave, selectedItemId }) => {
     isOpen && (
       <div className="modal-overlay">
         <div className="modal-content">
-          <button className="close-button" onClick={onClose}>Cerrar</button>
+
           <form onSubmit={handleSubmit}>
-            {/* Renderiza tus campos de formulario aquí */}
-            <label>
-              Campo 1:
-              <input type="text" name="campo1" value={formData.campo1} onChange={handleInputChange} />
-            </label>
-            <label>ID: {selectedItemId} </label>
-            {/* Agrega más campos según tus necesidades */}
-            <button type="submit">Guardar</button>
+            
+            <div className="form-group">
+              <label htmlFor="name-input">Nombre</label>
+              <input type="text" name="name" onChange={onInputChange} value={name} className="form-control" id="name-input" aria-describedby="nameHelp"/>
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="address-input">Dirección</label>
+              <input type="text" name="address" onChange={onInputChange} value={address} className="form-control" id="address-input"/>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="phone-input">Teléfono</label>
+              <input type="text" name="phone" onChange={onInputChange} value={phone} className="form-control" id="phone-input"/>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="city-input">Ciudad</label>
+              <input type="text" name="city" onChange={onInputChange} value={city} className="form-control" id="city-input"/>
+            </div>
+
+            <div className="button-container">
+              <button className="btn btn-danger" onClick={onClose}>Cerrar</button>
+              <button className="btn btn-primary" type="submit">Actualizar</button>
+            </div>
+
           </form>
         </div>
       </div>
