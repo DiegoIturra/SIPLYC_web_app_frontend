@@ -1,7 +1,14 @@
 import { ListItem } from "./ListItem";
 
-export const List = ({ properties = [], items = [], onDelete = () => {}, handleOpenModal }) => {
-  return (
+export const List = (
+  { 
+    properties = [], 
+    items = [], 
+    onDelete = () => {}, 
+    handleOpenModal = () => {} 
+  }) => {
+  
+    return (
     <>
       <table className="table">
         <thead>

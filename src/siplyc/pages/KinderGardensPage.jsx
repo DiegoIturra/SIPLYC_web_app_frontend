@@ -26,12 +26,11 @@ export const KinderGardensPage = () => {
 
   // Modal options
   const [modalOpen, setModalOpen] = useState(false);
-  const [itemId, setItemId] = useState('');
+  const [item, setItem] = useState('');
 
-  const handleOpenModal = (itemId) => {
+  const handleOpenModal = (item) => {
     setModalOpen(true);
-    setItemId(itemId);
-    console.log(`item id: ${itemId}`);
+    setItem(item)
   };
 
   const handleCloseModal = () => {
@@ -69,7 +68,7 @@ export const KinderGardensPage = () => {
         </div>
       </div>
 
-      <Modal isOpen={modalOpen} onClose={handleCloseModal} onSave={handleSaveModal} selectedItemId={itemId}/>
+      <Modal isOpen={modalOpen} onClose={handleCloseModal} onSave={handleSaveModal} item={item}/>
     </div>
   )
 }
