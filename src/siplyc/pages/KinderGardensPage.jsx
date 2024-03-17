@@ -12,6 +12,29 @@ export const KinderGardensPage = () => {
     return data
   }
 
+  const updateItem = async (item) => {
+
+    const id = item.id;
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    }
+
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch(`http://127.0.0.1:3000/kinder_gardens/${id}`, options);
+
+    if(response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Error al actualizar el registro');
+    }    
+  }
+
   const properties = [
     { label: 'Nombre', key: 'name' },
     { label: 'Dirección', key: 'address' },
@@ -37,9 +60,10 @@ export const KinderGardensPage = () => {
     setModalOpen(false);
   };
 
-  const handleSaveModal = (formData) => {
-    // Realiza acciones con los datos del formulario aquí
+  const handleSaveModal = async (formData) => {
     console.log('Datos guardados:', formData);
+    const response = await updateItem(formData);
+    console.log(response);
   };
 
   useEffect(() => {
