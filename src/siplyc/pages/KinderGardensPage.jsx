@@ -29,6 +29,7 @@ export const KinderGardensPage = () => {
 
     if(response.ok) {
       const data = await response.json();
+      setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
       return data;
     } else {
       throw new Error('Error al actualizar el registro');

@@ -49,22 +49,22 @@ export const Modal = ({ isOpen, onClose, onSave, item }) => {
             
             <div className="form-group">
               <label htmlFor="name-input">Nombre</label>
-              <input type="text" name="name" onChange={onInputChange} defaultValue={name} className="form-control" id="name-input" aria-describedby="nameHelp"/>
+              <input type="text" name="name" onChange={onInputChange} value={name} className="form-control" id="name-input" aria-describedby="nameHelp"/>
             </div>
             
             <div className="form-group">
               <label htmlFor="address-input">Dirección</label>
-              <input type="text" name="address" onChange={onInputChange} defaultValue={address} className="form-control" id="address-input"/>
+              <input type="text" name="address" onChange={onInputChange} value={address} className="form-control" id="address-input"/>
             </div>
 
             <div className="form-group">
               <label htmlFor="phone-input">Teléfono</label>
-              <input type="text" name="phone" onChange={onInputChange} defaultValue={phone} className="form-control" id="phone-input"/>
+              <input type="text" name="phone" onChange={onInputChange} value={phone} className="form-control" id="phone-input"/>
             </div>
 
             <div className="form-group">
               <label htmlFor="city-input">Ciudad</label>
-              <input type="text" name="city" onChange={onInputChange} defaultValue={city} className="form-control" id="city-input"/>
+              <input type="text" name="city" onChange={onInputChange} value={city} className="form-control" id="city-input"/>
             </div>
 
             <div className="button-container">
