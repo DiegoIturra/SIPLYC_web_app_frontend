@@ -1,13 +1,35 @@
-import { Item } from "./Item";
+import { ListItem } from "./ListItem";
 
-export const List = ({ items }) => {
-  return (
-    <ul className="list-group">
-      {
-        items.map((item, index) => (
-          <Item key={index} item={item} />
-        ))
-      }
-    </ul>
+export const List = (
+  { 
+    properties = [], 
+    items = [], 
+    onDelete = () => {}, 
+    handleOpenModal = () => {} 
+  }) => {
+  
+    return (
+    <>
+      <table className="table">
+        <thead>
+          <tr>
+            {
+              properties.map((property, index) => (
+                <th key={index}>{property.label}</th>
+              ))
+            }
+          </tr>
+        </thead>
+
+        <tbody>
+          {
+            items.map((item, index) => (
+              <ListItem key={index} properties={properties} item={item} onDelete={onDelete} handleOpenModal={handleOpenModal}/>
+            ))
+          }
+        </tbody>
+      </table>
+    </>
+
   );
 }
