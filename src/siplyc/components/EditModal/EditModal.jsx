@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import './Modal.css';
+import './EditModal.css';
 
-export const Modal = ({ isOpen, onClose, onSave, item }) => {
+export const EditModal = ({ isOpen, onClose, onSave, item }) => {
   
   const [formData, setFormData] = useState({
     id: '',

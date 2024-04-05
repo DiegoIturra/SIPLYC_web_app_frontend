@@ -1,7 +1,7 @@
 import { List } from "../components/List"
 import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
-import { Modal } from "../components/Modal/Modal";
+import { EditModal } from "../components/EditModal/EditModal";
 
 export const KinderGardensPage = () => {
 
@@ -91,7 +91,7 @@ export const KinderGardensPage = () => {
         </div>
       </div>
 
-      <Modal isOpen={modalOpen} onClose={handleCloseModal} onSave={handleUpdate} item={item}/>
+      <EditModal isOpen={modalOpen} onClose={handleCloseModal} onSave={handleUpdate} item={item}/>
     </div>
   )
 }
