@@ -45,6 +45,27 @@ export const KinderGardensPage = () => {
     }    
   }
 
+  const createItem = async (item) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    }
+
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch('http://127.0.0.1:3000/kinder_gardens', options);
+
+    if(response.ok) {
+      const data = await response.json();
+      setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
+      return data;
+    } else {
+      throw new Error('Error al actualizar el registro');
+    }  
+  }
+
   const { isLoading, error, data } = useQuery('repoData', fetchItems);
 
   const [items, setItems] = useState([]);
@@ -68,7 +89,8 @@ export const KinderGardensPage = () => {
   };
 
   const handleCreate = async (formData) => {
-    console.log(formData);
+    const response = await createItem(formData);
+    console.log(response);
   }
 
   const handleDelete = (id) => setItems(prevItems => prevItems.filter(item => item.id !== id))
