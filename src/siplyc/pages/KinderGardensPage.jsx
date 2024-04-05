@@ -2,6 +2,7 @@ import { List } from "../components/List"
 import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
 import { EditModal } from "../components/EditModal/EditModal";
+import { CreateModal } from "../components/CreateModal/CreateModal";
 
 export const KinderGardensPage = () => {
 
@@ -47,23 +48,28 @@ export const KinderGardensPage = () => {
   const { isLoading, error, data } = useQuery('repoData', fetchItems);
 
   const [items, setItems] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [createModalOpen, setCreateModalOpen] = useState(false);
   const [item, setItem] = useState('');
 
   const handleOpenEditModal = (item) => {
-    setModalOpen(true);
+    setEditModalOpen(true);
     setItem(item)
   };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
+  const handleOpenCreateModal = () => setCreateModalOpen(true);
+  const handleCloseEditModal = () => setEditModalOpen(false);
+  const handleCloseCreateModal = () => setCreateModalOpen(false);
+
 
   const handleUpdate = async (formData) => {
     const response = await updateItem(formData);
     console.log(response);
   };
 
+  const handleCreate = async (formData) => {
+    console.log(formData);
+  }
 
   const handleDelete = (id) => setItems(prevItems => prevItems.filter(item => item.id !== id))
 
@@ -82,7 +88,7 @@ export const KinderGardensPage = () => {
       <h1 className="container pt-4 d-flex justify-content-center align-items-center">Jardines</h1>
 
       <div className="ontainer pt-4 d-flex justify-content-center align-items-center">
-        <button className="btn btn-primary">Nuevo +</button>
+        <button className="btn btn-primary" onClick={handleOpenCreateModal}>Nuevo +</button>
       </div>
 
       <div className="container mt-4 pb-4 d-flex justify-content-center align-items-center">
@@ -91,7 +97,8 @@ export const KinderGardensPage = () => {
         </div>
       </div>
 
-      <EditModal isOpen={modalOpen} onClose={handleCloseModal} onSave={handleUpdate} item={item}/>
+      <EditModal isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>
+      <CreateModal isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
     </div>
   )
 }
