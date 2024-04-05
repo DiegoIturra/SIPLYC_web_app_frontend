@@ -5,6 +5,14 @@ import { Modal } from "../components/Modal/Modal";
 
 export const KinderGardensPage = () => {
 
+  const properties = [
+    { label: 'Nombre', key: 'name' },
+    { label: 'Dirección', key: 'address' },
+    { label: 'Teléfono', key: 'phone' },
+    { label: 'Ciudad', key: 'city_name' },
+    { label: 'Acciones', key: 'actions' }
+  ]
+
   const fetchItems = async () => {
     // TODO: Replace raw string with enviroment variable
     const response = await fetch('http://127.0.0.1:3000/kinder_gardens')
@@ -36,23 +44,13 @@ export const KinderGardensPage = () => {
     }    
   }
 
-  const properties = [
-    { label: 'Nombre', key: 'name' },
-    { label: 'Dirección', key: 'address' },
-    { label: 'Teléfono', key: 'phone' },
-    { label: 'Ciudad', key: 'city_name' },
-    { label: 'Acciones', key: 'actions' }
-  ]
-
   const { isLoading, error, data } = useQuery('repoData', fetchItems);
 
   const [items, setItems] = useState([]);
-
-  // Modal options
   const [modalOpen, setModalOpen] = useState(false);
   const [item, setItem] = useState('');
 
-  const handleOpenModal = (item) => {
+  const handleOpenEditModal = (item) => {
     setModalOpen(true);
     setItem(item)
   };
@@ -61,19 +59,19 @@ export const KinderGardensPage = () => {
     setModalOpen(false);
   };
 
-  const handleSaveModal = async (formData) => {
-    console.log('Datos guardados:', formData);
+  const handleUpdate = async (formData) => {
     const response = await updateItem(formData);
     console.log(response);
   };
+
+
+  const handleDelete = (id) => setItems(prevItems => prevItems.filter(item => item.id !== id))
 
   useEffect(() => {
     if (data) {
       setItems(data);
     }
   }, [data]);
-
-  const handleDelete = (id) => setItems(prevItems => prevItems.filter(item => item.id !== id))
 
   if (isLoading) return 'Loading...'
 
@@ -89,11 +87,11 @@ export const KinderGardensPage = () => {
 
       <div className="container mt-4 pb-4 d-flex justify-content-center align-items-center">
         <div className="col-7">
-          <List properties={properties} items={items} onDelete={handleDelete} handleOpenModal={handleOpenModal}/>
+          <List properties={properties} items={items} onDelete={handleDelete} handleOpenModal={handleOpenEditModal}/>
         </div>
       </div>
 
-      <Modal isOpen={modalOpen} onClose={handleCloseModal} onSave={handleSaveModal} item={item}/>
+      <Modal isOpen={modalOpen} onClose={handleCloseModal} onSave={handleUpdate} item={item}/>
     </div>
   )
 }
