@@ -10,8 +10,8 @@ export const List = (
   
     return (
     <>
-      <table className="table">
-        <thead>
+      <table className="table table-hover" style={{ backgroundColor: 'white' }}>
+        <thead className='thead-dark'>
           <tr>
             {
               properties.map((property, index) => (
