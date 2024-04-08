@@ -1,8 +1,8 @@
 import { List } from "../components/List"
 import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
-import { EditModal } from "../components/EditModal/EditModal";
-import { CreateModal } from "../components/CreateModal/CreateModal";
+import EditKinderGarden from "../components/EditKinderGarden/EditKinderGarden";
+import { CreateKinderGarden } from "../components/CreateKinderGarden/CreateKinderGarden";
 
 export const KinderGardensPage = () => {
 
@@ -119,8 +119,8 @@ export const KinderGardensPage = () => {
         </div>
       </div>
 
-      <EditModal isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>
-      <CreateModal isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
+      <EditKinderGarden isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>
+      <CreateKinderGarden isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
     </div>
   )
 }
