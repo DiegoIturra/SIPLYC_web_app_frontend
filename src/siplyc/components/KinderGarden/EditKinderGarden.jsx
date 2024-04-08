@@ -54,5 +54,3 @@ export const EditKinderGarden = ({ isOpen, onClose, onSave, item }) => {
     </Modal>
   );
 }
-
-export default EditKinderGarden;

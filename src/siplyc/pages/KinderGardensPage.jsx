@@ -1,9 +1,10 @@
 import { List } from "../components/List"
 import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
-import EditKinderGarden from "../components/EditKinderGarden/EditKinderGarden";
-import { CreateKinderGarden } from "../components/CreateKinderGarden/CreateKinderGarden";
+import { EditKinderGarden } from "../components/KinderGarden/EditKinderGarden";
+import { CreateKinderGarden } from "../components/KinderGarden/CreateKinderGarden";
 
+//TODO: Update page when a new item is created
 export const KinderGardensPage = () => {
 
   const properties = [
@@ -62,7 +63,7 @@ export const KinderGardensPage = () => {
       setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
       return data;
     } else {
-      throw new Error('Error al actualizar el registro');
+      throw new Error('Error al crear registro');
     }  
   }
 
