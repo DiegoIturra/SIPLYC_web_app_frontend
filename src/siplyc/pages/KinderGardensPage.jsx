@@ -94,6 +94,7 @@ export const KinderGardensPage = () => {
     console.log(response);
   }
 
+  //TODO: send a delete request to the server
   const handleDelete = (id) => setItems(prevItems => prevItems.filter(item => item.id !== id))
 
   useEffect(() => {

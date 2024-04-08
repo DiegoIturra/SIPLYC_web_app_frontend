@@ -78,6 +78,8 @@ export const CitiesPage = () => {
   const handleOpenCreateModal = () => setCreateModalOpen(true);
   const handleCloseEditModal = () => setEditModalOpen(false);
   const handleCloseCreateModal = () => setCreateModalOpen(false);
+
+  //TODO: send a delete request to the server
   const handleDelete = (id) => setItems(prevItems => prevItems.filter(item => item.id !== id))
 
   const handleUpdate = async (formData) => {
