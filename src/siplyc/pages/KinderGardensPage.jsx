@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { EditKinderGarden } from "../components/KinderGarden/EditKinderGarden";
 import { CreateKinderGarden } from "../components/KinderGarden/CreateKinderGarden";
 
-//TODO: Update page when a new item is created
 export const KinderGardensPage = () => {
 
   const properties = [
@@ -60,11 +59,38 @@ export const KinderGardensPage = () => {
 
     if(response.ok) {
       const data = await response.json();
-      setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
-      return data;
+
+      const newItem = {
+        ...data,
+        city_name: data.city.name
+      }
+
+      setItems([...items, newItem]);
+      return data
     } else {
       throw new Error('Error al crear registro');
     }  
+  }
+
+  const deleteItem = async (id) => {
+    
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch(`http://127.0.0.1:3000/kinder_gardens/${id}`, options);
+
+    if(response.ok) {
+      setItems(prevItems => prevItems.filter(item => item.id !== id))
+      return response;
+    } else {
+      throw new Error('Error al eliminar registro');
+    } 
+
   }
 
   const { isLoading, error, data } = useQuery('repoData', fetchItems);
@@ -84,18 +110,9 @@ export const KinderGardensPage = () => {
   const handleCloseCreateModal = () => setCreateModalOpen(false);
 
 
-  const handleUpdate = async (formData) => {
-    const response = await updateItem(formData);
-    console.log(response);
-  };
-
-  const handleCreate = async (formData) => {
-    const response = await createItem(formData);
-    console.log(response);
-  }
-
-  //TODO: send a delete request to the server
-  const handleDelete = (id) => setItems(prevItems => prevItems.filter(item => item.id !== id))
+  const handleUpdate = async (formData) => await updateItem(formData);
+  const handleCreate = async (formData) => await createItem(formData);
+  const handleDelete = async (id) => await deleteItem(id);
 
   useEffect(() => {
     if (data) {
