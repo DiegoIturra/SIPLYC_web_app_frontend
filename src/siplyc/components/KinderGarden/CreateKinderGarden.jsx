@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "../Modal/Modal";
+import { useQuery } from "react-query";
 
+//TODO: Update page when a new item is created
 export const CreateKinderGarden = ({ isOpen, onClose, onSave }) => {
   
   const [formData, setFormData] = useState({
     name: '',
     address: '',
     phone: '',
-    city: ''
+    city_id: ''
   });
 
-  
-  const { name, address, phone, city } = formData;
+  const [cities, setCities] = useState([]);
+  const { name, address, phone, city_id } = formData;
 
   const onInputChange = ({ target }) => {
     const { name, value } = target;
@@ -20,6 +22,24 @@ export const CreateKinderGarden = ({ isOpen, onClose, onSave }) => {
       [ name ]: value
     })
   }
+
+  const fetchItems = async () => {
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch('http://127.0.0.1:3000/cities')
+    const data = await response.json()
+    return data
+  }
+
+  const { isLoading, error, data } = useQuery('fetchCities', fetchItems);
+
+  useEffect(() => {
+    if (data) {
+      setCities(data);
+    }
+  }, [data]);
+
+  if (isLoading) return 'Loading...'
+  if (error) return 'An error has occurred: ' + error.message
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} onSave={() => onSave(formData)}>
@@ -40,7 +60,14 @@ export const CreateKinderGarden = ({ isOpen, onClose, onSave }) => {
 
       <div className="form-group">
         <label htmlFor="city-input">Ciudad</label>
-        <input type="text" name="city" onChange={onInputChange} value={city} className="form-control" id="city-input"/>
+        <select name="city_id" onChange={onInputChange} value={city_id} className="form-control" id="city-input">
+          <option value="">Seleccione una ciudad</option>
+          {
+            cities.map((city) => (
+              <option key={city.id} value={city.id}>{city.name}</option>
+            ))
+          }
+        </select>
       </div>
     </Modal>
   );
