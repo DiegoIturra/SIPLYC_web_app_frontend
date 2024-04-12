@@ -14,7 +14,7 @@ export const ListItem = ({ properties, item, onDelete, handleOpenModal }) => {
             <td key={index} scope="row">
               <div className="d-flex justify-content-evenly">
     
-                <button onClick={() => handleOpenModal(item)} className="btn btn-warning me-2">
+                <button onClick={() => handleOpenModal(item)} className="btn btn-warning me-2" style={{ marginRight: '5px' }}>
                   <BsPencilFill />
                 </button>
                 
