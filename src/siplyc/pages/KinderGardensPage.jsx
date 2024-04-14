@@ -39,7 +39,13 @@ export const KinderGardensPage = () => {
 
     if(response.ok) {
       const data = await response.json();
-      setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
+      
+      const newItem = {
+        ...data,
+        city_name: data.city.name
+      }
+
+      setItems(prevItems => prevItems.map(item => item.id === newItem.id ? newItem : item));
       showFlashNotification('success', 'Registro actualizado correctamente')
       return data;
     } else {
