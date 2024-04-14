@@ -91,8 +91,10 @@ export const KinderGardensPage = () => {
 
     if(response.ok) {
       setItems(prevItems => prevItems.filter(item => item.id !== id))
+      showFlashNotification('success', 'Registro eliminado correctamente')
       return response;
     } else {
+      showFlashNotification('danger', 'Error al eliminar el registro')
       throw new Error('Error al eliminar registro');
     } 
 
