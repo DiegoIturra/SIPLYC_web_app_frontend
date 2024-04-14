@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { List } from "../components/List";
 import { FlashNotification } from "../components/FlashNotification";
+import { CreateTeacher } from "../components/Teacher/CreateTeacher";
+import { EditTeacher } from "../components/Teacher/EditTeacher";
 
 export const TeachersPage = () => {
 
@@ -46,8 +48,10 @@ export const TeachersPage = () => {
     if(response.ok) {
       const data = await response.json();
       setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
+      showFlashNotification('success', 'Registro actualizado correctamente')
       return data;
     } else {
+      showFlashNotification('danger', 'Error al actualizar el registro')
       throw new Error('Error al actualizar el registro');
     }   
   }
@@ -66,9 +70,11 @@ export const TeachersPage = () => {
 
     if(response.ok) {
       const data = await response.json();
-      setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
+      setItems([...items, data]);
+      showFlashNotification('success', 'Registro creado correctamente')
       return data;
     } else {
+      showFlashNotification('danger', 'Error al crear el registro')
       throw new Error('Error al crear registro');
     }  
   }
@@ -114,20 +120,9 @@ export const TeachersPage = () => {
     setFlashMessage(message);
   }
 
-  const handleDelete = async (id) => {
-    const response = await deleteItem(id);
-    console.log(response);
-  }
-
-  const handleUpdate = async (formData) => {
-    const response = await updateItem(formData);
-    console.log(response);
-  }
-
-  const handleCreate = async (formData) => {
-    const response = await createItem(formData);
-    console.log(response);
-  }
+  const handleCreate = async (formData) => await createItem(formData);
+  const handleDelete = async (id) => await deleteItem(id);
+  const handleUpdate = async (formData) => await updateItem(formData);
 
   useEffect(() => {
     if (data) {
@@ -154,8 +149,8 @@ export const TeachersPage = () => {
         </div>
       </div>
 
-      {/* <CreateCity isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
-      <EditCity isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/> */}
+      <CreateTeacher isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
+      <EditTeacher isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>
     </div>  
   )
 } 
