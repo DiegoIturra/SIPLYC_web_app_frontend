@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import Modal from "../Modal/Modal";
 
 export const EditKinderGarden = ({ isOpen, onClose, onSave, item }) => {
+
+  const [cities, setCities] = useState([]);
   const [formData, setFormData] = useState({
     id: '',
     name: '',
     address: '',
     phone: '',
-    city: ''
+    city_id: ''
   });
 
   useEffect(() => {
@@ -20,8 +23,6 @@ export const EditKinderGarden = ({ isOpen, onClose, onSave, item }) => {
     });
   }, [item]);
 
-  const { name, address, phone, city } = formData;
-
   const onInputChange = ({ target }) => {
     const { name, value } = target;
     setFormData({
@@ -29,6 +30,26 @@ export const EditKinderGarden = ({ isOpen, onClose, onSave, item }) => {
       [name]: value
     });
   };
+
+  const { name, address, phone, city_id } = formData;
+
+  const fetchItems = async () => {
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch('http://127.0.0.1:3000/cities')
+    const data = await response.json()
+    return data
+  }
+
+  const { isLoading, error, data } = useQuery('fetchCities', fetchItems);
+
+  useEffect(() => {
+    if (data) {
+      setCities(data);
+    }
+  }, [data]);
+
+  if (isLoading) return 'Loading...'
+  if (error) return 'An error has occurred: ' + error.message
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} onSave={() => onSave(formData)} textButton="Actualizar">
@@ -49,7 +70,14 @@ export const EditKinderGarden = ({ isOpen, onClose, onSave, item }) => {
 
       <div className="form-group">
         <label htmlFor="city-input">Ciudad</label>
-        <input type="text" name="city" onChange={onInputChange} value={city} className="form-control" id="city-input"/>
+        <select name="city_id" onChange={onInputChange} value={city_id} className="form-control" id="city-input">
+          <option value={item.city_id}>{item.city_name}</option>
+          {
+            cities.map((city) => (
+              <option key={city.id} value={city.id}>{city.name}</option>
+            ))
+          }
+        </select>
       </div>
     </Modal>
   );
