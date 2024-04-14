@@ -8,7 +8,7 @@ export const ListItem = ({ properties, item, onDelete, handleOpenModal }) => {
         properties.map((property, index) => (
           (index !== properties.length - 1) ? 
           
-          (<td key={index} scope="row">{item[property.key]}</td>) :
+          (<td key={index} scope="row" style={{cursor: 'pointer'}}>{item[property.key]}</td>) :
           
           (
             <td key={index} scope="row">
