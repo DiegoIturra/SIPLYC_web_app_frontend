@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { CreateCity } from "../components/City/CreateCity";
 import { EditCity } from "../components/City/EditCity";
+import { FlashNotification } from "../components/FlashNotification";
 
 //TODO: Update page when a new item is created
 export const CitiesPage = () => {
@@ -58,6 +59,29 @@ export const CitiesPage = () => {
     }  
   }
 
+  const deleteItem = async (id) => {
+    
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch(`http://127.0.0.1:3000/cities/${id}`, options);
+
+    if(response.ok) {
+      setItems(prevItems => prevItems.filter(item => item.id !== id))
+      showFlashNotification('success', 'Registro eliminado correctamente')
+      return response;
+    } else {
+      showFlashNotification('danger', 'Error al eliminar el registro')
+      throw new Error('Error al eliminar registro');
+    } 
+
+  }
+
   const { isLoading, error, data } = useQuery('repoData', fetchItems);
 
   const properties = [
@@ -69,6 +93,9 @@ export const CitiesPage = () => {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [item, setItem] = useState('');
+  const [openFlash, setOpenFlash] = useState(false);
+  const [notificationType, setNotificationType] = useState('success');
+  const [flashMessage, setFlashMessage] = useState('');
 
   const handleOpenEditModal = (item) => {
     setEditModalOpen(true);
@@ -78,9 +105,18 @@ export const CitiesPage = () => {
   const handleOpenCreateModal = () => setCreateModalOpen(true);
   const handleCloseEditModal = () => setEditModalOpen(false);
   const handleCloseCreateModal = () => setCreateModalOpen(false);
+  const handleCloseFlash = () => setOpenFlash(false);
 
-  //TODO: send a delete request to the server
-  const handleDelete = (id) => setItems(prevItems => prevItems.filter(item => item.id !== id))
+  const showFlashNotification = (type = 'success', message = '') => {
+    setOpenFlash(true);
+    setNotificationType(type);
+    setFlashMessage(message);
+  }
+
+  const handleDelete = async (id) => {
+    const response = await deleteItem(id);
+    console.log(response);
+  }
 
   const handleUpdate = async (formData) => {
     const response = await updateItem(formData);
@@ -104,6 +140,7 @@ export const CitiesPage = () => {
 
   return (
     <div style={{ backgroundColor: '#00ac96', minHeight: '100vh' }}>
+      <FlashNotification message={flashMessage} isVisible={openFlash} type={notificationType} onClose={handleCloseFlash}/>
       <h1 className="container pt-4 d-flex justify-content-center align-items-center">Ciudades</h1>
 
       <div className="ontainer pt-4 d-flex justify-content-center align-items-center">
