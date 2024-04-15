@@ -1,14 +1,14 @@
 import { BsPencilFill } from "react-icons/bs";
 import { FaTrashAlt } from "react-icons/fa";
 
-export const ListItem = ({ properties, item, onDelete, handleOpenModal }) => {
+export const ListItem = ({ properties, item, onDelete, onClick, handleOpenModal }) => {
   return (
     <tr>                
       {
         properties.map((property, index) => (
           (index !== properties.length - 1) ? 
           
-          (<td key={index} scope="row" style={{cursor: 'pointer'}}>{item[property.key]}</td>) :
+          (<td onClick={() => onClick(item)} key={index} scope="row" style={{cursor: 'pointer'}}>{item[property.key]}</td>) :
           
           (
             <td key={index} scope="row">

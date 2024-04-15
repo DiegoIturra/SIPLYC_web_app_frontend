@@ -4,7 +4,8 @@ export const List = (
   { 
     properties = [], 
     items = [], 
-    onDelete = () => {}, 
+    onDelete = () => {},
+    onClick = () => {}, 
     handleOpenModal = () => {} 
   }) => {
   
@@ -24,7 +25,14 @@ export const List = (
         <tbody>
           {
             items.map((item, index) => (
-              <ListItem key={index} properties={properties} item={item} onDelete={onDelete} handleOpenModal={handleOpenModal}/>
+              <ListItem 
+                key={index} 
+                properties={properties} 
+                item={item} 
+                onDelete={onDelete} 
+                onClick={onClick}
+                handleOpenModal={handleOpenModal}
+              />
             ))
           }
         </tbody>
