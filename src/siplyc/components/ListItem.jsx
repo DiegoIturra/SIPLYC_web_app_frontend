@@ -1,7 +1,7 @@
 import { BsPencilFill } from "react-icons/bs";
 import { FaTrashAlt } from "react-icons/fa";
 
-export const ListItem = ({ properties, item, onDelete, onClick, handleOpenModal }) => {
+export const ListItem = ({ properties, item, onDelete = () => {}, onClick = () => {}, handleOpenModal = () => {}}) => {
   return (
     <tr>                
       {
