@@ -1,10 +1,11 @@
 import { useState } from "react";
-import DatePicker from "react-date-picker";
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import Calendar from "react-calendar";
 import Modal from "../Modal/Modal";
 
+
+//TODO: Fix date when display on calendar
 export const CreateChildren = ({ isOpen, onClose, onSave }) => {
   const [formData, setFormData] = useState({
     rut: '',
@@ -24,9 +25,21 @@ export const CreateChildren = ({ isOpen, onClose, onSave }) => {
       ...formData,
       [name]: value
     });
-
-    console.log(value);
   };
+
+  //TODO: convert this function to a common function between components
+  const convertDate = date => {
+    const formattedDate = new Date(date)
+    formattedDate.setMinutes(formattedDate.getMinutes() + formattedDate.getTimezoneOffset());
+    return formattedDate;
+  }
+
+  const onChangeCalendarDate = (date) => {
+    setFormData({
+      ...formData,
+      birthday: convertDate(date)
+    })
+  }
 
   const { 
     rut, 
@@ -64,10 +77,7 @@ export const CreateChildren = ({ isOpen, onClose, onSave }) => {
 
       <div className="form-group">
         <label htmlFor="birthday-input">Nacimiento</label>
-        <Calendar onChange={onInputChange} value={birthday} />
-        {/* <DatePicker onChange={onInputChange} value={birthday} /> */}
-        {/* <label htmlFor="birthday-input">Nacimiento</label>
-        <input type="text" name="birthday" onChange={onInputChange} value={birthday} className="form-control" id="birthday-input" aria-describedby="nameHelp"/> */}
+        <Calendar onChange={(date) => onChangeCalendarDate(date)} value={birthday} />
       </div>
 
       <div className="form-group">
