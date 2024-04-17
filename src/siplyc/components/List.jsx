@@ -9,8 +9,8 @@ export const List = (
     handleOpenModal = () => {} 
   }) => {
   
-    return (
-    <>
+  return (
+    <div className="d-flex justify-content-center align-items-center">
       <table className="table table-hover" style={{ backgroundColor: 'white' }}>
         <thead className='thead-dark'>
           <tr>
@@ -37,7 +37,6 @@ export const List = (
           }
         </tbody>
       </table>
-    </>
-
+    </div>
   );
 }
