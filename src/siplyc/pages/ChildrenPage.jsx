@@ -63,7 +63,10 @@ export const ChildrenPage = () => {
     }  
   }
 
-  const deleteItem = async (id) => {}
+  //TODO: handle delete item
+  const deleteItem = async (id) => {
+    console.log('deleteItem', id)
+  }
 
   const properties = [
     { label: 'Rut', key: 'rut' },
