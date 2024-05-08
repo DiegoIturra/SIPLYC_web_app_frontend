@@ -4,14 +4,15 @@ export const List = (
   { 
     properties = [], 
     items = [], 
-    onDelete = () => {}, 
+    onDelete = () => {},
+    onClick = () => {}, 
     handleOpenModal = () => {} 
   }) => {
   
-    return (
-    <>
-      <table className="table">
-        <thead>
+  return (
+    <div className="d-flex justify-content-center align-items-center">
+      <table className="table table-hover" style={{ backgroundColor: 'white' }}>
+        <thead className='thead-dark'>
           <tr>
             {
               properties.map((property, index) => (
@@ -24,12 +25,18 @@ export const List = (
         <tbody>
           {
             items.map((item, index) => (
-              <ListItem key={index} properties={properties} item={item} onDelete={onDelete} handleOpenModal={handleOpenModal}/>
+              <ListItem 
+                key={index} 
+                properties={properties} 
+                item={item} 
+                onDelete={onDelete} 
+                onClick={onClick}
+                handleOpenModal={handleOpenModal}
+              />
             ))
           }
         </tbody>
       </table>
-    </>
-
+    </div>
   );
 }

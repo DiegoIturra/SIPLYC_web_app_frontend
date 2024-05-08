@@ -5,8 +5,8 @@ export const Table = ({ data }) => {
     <div className="data-table-container">
       <h3 className="d-flex justify-content-center">Contenido del archivo excel: </h3>
       
-      <table className="table">
-        <thead>
+      <table className="table table-hover" style={{ backgroundColor: 'white' }}>
+        <thead className='thead-dark'>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Ciudad</th>

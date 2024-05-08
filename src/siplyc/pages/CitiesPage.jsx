@@ -1,32 +1,16 @@
+import { List } from "../components/List"
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { List } from "../components/List";
+import { CreateCity } from "../components/City/CreateCity";
+import { EditCity } from "../components/City/EditCity";
 import { FlashNotification } from "../components/FlashNotification";
-import { CreateTeacher } from "../components/Teacher/CreateTeacher";
-import { EditTeacher } from "../components/Teacher/EditTeacher";
 
-export const TeachersPage = () => {
-
-  const [items, setItems] = useState([]);
-  const [editModalOpen, setEditModalOpen] = useState(false);
-  const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [item, setItem] = useState('');
-  const [openFlash, setOpenFlash] = useState(false);
-  const [notificationType, setNotificationType] = useState('success');
-  const [flashMessage, setFlashMessage] = useState('');
-
-  const properties = [
-    { label: 'Rut', key: 'rut' },
-    { label: 'Nombres', key: 'names' },
-    { label: 'Apellido Paterno', key: 'father_lastname' },
-    { label: 'Apellido Materno', key: 'mother_lastname' },
-    { label: 'Email', key: 'email' },
-    { label: 'Acciones', key: 'actions' }
-  ]
+//TODO: Update page when a new item is created
+export const CitiesPage = () => {
 
   const fetchItems = async () => {
     // TODO: Replace raw string with enviroment variable
-    const response = await fetch('http://127.0.0.1:3000/teachers')
+    const response = await fetch('http://127.0.0.1:3000/cities')
     const data = await response.json()
     return data
   }
@@ -43,15 +27,13 @@ export const TeachersPage = () => {
     }
 
     // TODO: Replace raw string with enviroment variable
-    const response = await fetch(`http://127.0.0.1:3000/teachers/${id}`, options);
+    const response = await fetch(`http://127.0.0.1:3000/cities/${id}`, options);
 
     if(response.ok) {
       const data = await response.json();
       setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
-      showFlashNotification('success', 'Registro actualizado correctamente')
       return data;
     } else {
-      showFlashNotification('danger', 'Error al actualizar el registro')
       throw new Error('Error al actualizar el registro');
     }   
   }
@@ -66,15 +48,13 @@ export const TeachersPage = () => {
     }
 
     // TODO: Replace raw string with enviroment variable
-    const response = await fetch('http://127.0.0.1:3000/teachers', options);
+    const response = await fetch('http://127.0.0.1:3000/cities', options);
 
     if(response.ok) {
       const data = await response.json();
-      setItems([...items, data]);
-      showFlashNotification('success', 'Registro creado correctamente')
+      setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
       return data;
     } else {
-      showFlashNotification('danger', 'Error al crear el registro')
       throw new Error('Error al crear registro');
     }  
   }
@@ -89,7 +69,7 @@ export const TeachersPage = () => {
     }
 
     // TODO: Replace raw string with enviroment variable
-    const response = await fetch(`http://127.0.0.1:3000/teachers/${id}`, options);
+    const response = await fetch(`http://127.0.0.1:3000/cities/${id}`, options);
 
     if(response.ok) {
       setItems(prevItems => prevItems.filter(item => item.id !== id))
@@ -102,7 +82,20 @@ export const TeachersPage = () => {
 
   }
 
-  const { isLoading, error, data } = useQuery('fetchTeachers', fetchItems);
+  const { isLoading, error, data } = useQuery('repoData', fetchItems);
+
+  const properties = [
+    { label: 'Nombre', key: 'name' },
+    { label: 'Acciones', key: 'actions' }
+  ]
+
+  const [items, setItems] = useState([]);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [item, setItem] = useState('');
+  const [openFlash, setOpenFlash] = useState(false);
+  const [notificationType, setNotificationType] = useState('success');
+  const [flashMessage, setFlashMessage] = useState('');
 
   const handleOpenEditModal = (item) => {
     setEditModalOpen(true);
@@ -120,9 +113,20 @@ export const TeachersPage = () => {
     setFlashMessage(message);
   }
 
-  const handleCreate = async (formData) => await createItem(formData);
-  const handleDelete = async (id) => await deleteItem(id);
-  const handleUpdate = async (formData) => await updateItem(formData);
+  const handleDelete = async (id) => {
+    const response = await deleteItem(id);
+    console.log(response);
+  }
+
+  const handleUpdate = async (formData) => {
+    const response = await updateItem(formData);
+    console.log(response);
+  }
+
+  const handleCreate = async (formData) => {
+    const response = await createItem(formData);
+    console.log(response);
+  }
 
   useEffect(() => {
     if (data) {
@@ -137,7 +141,7 @@ export const TeachersPage = () => {
   return (
     <div style={{ backgroundColor: '#00ac96', minHeight: '100vh' }}>
       <FlashNotification message={flashMessage} isVisible={openFlash} type={notificationType} onClose={handleCloseFlash}/>
-      <h1 className="container pt-4 d-flex justify-content-center align-items-center">Educadores(as)</h1>
+      <h1 className="container pt-4 d-flex justify-content-center align-items-center">Ciudades</h1>
 
       <div className="ontainer pt-4 d-flex justify-content-center align-items-center">
         <button className="btn btn-primary" onClick={handleOpenCreateModal}>Nuevo +</button>
@@ -149,8 +153,8 @@ export const TeachersPage = () => {
         </div>
       </div>
 
-      <CreateTeacher isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
-      <EditTeacher isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>
-    </div>  
+      <CreateCity isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
+      <EditCity isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>
+    </div>
   )
-} 
+}

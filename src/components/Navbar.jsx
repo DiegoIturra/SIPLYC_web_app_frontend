@@ -22,6 +22,17 @@ export const NavBar = () => {
             <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/teachers">Tutores</NavLink>
             <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/files">Nomina</NavLink>
             <NavLink className={ ({isActive}) =>  `nav-item nav-link ${ isActive ? 'active' : ''}`} to="/graphics">Gráficos</NavLink>
+          
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Mantenedores
+              </a>
+              <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a className="dropdown-item" href="/cities">Ciudades</a>
+                <a className="dropdown-item" href="#">Another action</a>
+                <a className="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
           </div>
         </div>
 

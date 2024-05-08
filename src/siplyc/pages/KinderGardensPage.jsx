@@ -1,8 +1,9 @@
 import { List } from "../components/List"
 import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
-import { EditModal } from "../components/EditModal/EditModal";
-import { CreateModal } from "../components/CreateModal/CreateModal";
+import { EditKinderGarden } from "../components/KinderGarden/EditKinderGarden";
+import { CreateKinderGarden } from "../components/KinderGarden/CreateKinderGarden";
+import { FlashNotification } from "../components/FlashNotification";
 
 export const KinderGardensPage = () => {
 
@@ -38,9 +39,17 @@ export const KinderGardensPage = () => {
 
     if(response.ok) {
       const data = await response.json();
-      setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
+      
+      const newItem = {
+        ...data,
+        city_name: data.city.name
+      }
+
+      setItems(prevItems => prevItems.map(item => item.id === newItem.id ? newItem : item));
+      showFlashNotification('success', 'Registro actualizado correctamente')
       return data;
     } else {
+      showFlashNotification('danger', 'Error al actualizar el registro')
       throw new Error('Error al actualizar el registro');
     }    
   }
@@ -59,11 +68,42 @@ export const KinderGardensPage = () => {
 
     if(response.ok) {
       const data = await response.json();
-      setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
-      return data;
+
+      const newItem = {
+        ...data,
+        city_name: data.city.name
+      }
+
+      setItems([...items, newItem]);
+      showFlashNotification('success', 'Registro creado correctamente')
+      return data
     } else {
-      throw new Error('Error al actualizar el registro');
+      showFlashNotification('danger', 'Error al crear el registro')
+      throw new Error('Error al crear registro');
     }  
+  }
+
+  const deleteItem = async (id) => {
+    
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch(`http://127.0.0.1:3000/kinder_gardens/${id}`, options);
+
+    if(response.ok) {
+      setItems(prevItems => prevItems.filter(item => item.id !== id))
+      showFlashNotification('success', 'Registro eliminado correctamente')
+      return response;
+    } else {
+      showFlashNotification('danger', 'Error al eliminar el registro')
+      throw new Error('Error al eliminar registro');
+    } 
+
   }
 
   const { isLoading, error, data } = useQuery('repoData', fetchItems);
@@ -72,6 +112,9 @@ export const KinderGardensPage = () => {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [item, setItem] = useState('');
+  const [openFlash, setOpenFlash] = useState(false);
+  const [notificationType, setNotificationType] = useState('success');
+  const [flashMessage, setFlashMessage] = useState('');
 
   const handleOpenEditModal = (item) => {
     setEditModalOpen(true);
@@ -81,19 +124,18 @@ export const KinderGardensPage = () => {
   const handleOpenCreateModal = () => setCreateModalOpen(true);
   const handleCloseEditModal = () => setEditModalOpen(false);
   const handleCloseCreateModal = () => setCreateModalOpen(false);
+  const handleCloseFlash = () => setOpenFlash(false);
 
-
-  const handleUpdate = async (formData) => {
-    const response = await updateItem(formData);
-    console.log(response);
-  };
-
-  const handleCreate = async (formData) => {
-    const response = await createItem(formData);
-    console.log(response);
+  const showFlashNotification = (type = 'success', message = '') => {
+    setOpenFlash(true);
+    setNotificationType(type);
+    setFlashMessage(message);
   }
 
-  const handleDelete = (id) => setItems(prevItems => prevItems.filter(item => item.id !== id))
+
+  const handleUpdate = async (formData) => await updateItem(formData);
+  const handleCreate = async (formData) => await createItem(formData);
+  const handleDelete = async (id) => await deleteItem(id);
 
   useEffect(() => {
     if (data) {
@@ -107,6 +149,8 @@ export const KinderGardensPage = () => {
 
   return (
     <div style={{ backgroundColor: '#00ac96', minHeight: '100vh' }}>
+      <FlashNotification message={flashMessage} isVisible={openFlash} type={notificationType} onClose={handleCloseFlash}/>
+
       <h1 className="container pt-4 d-flex justify-content-center align-items-center">Jardines</h1>
 
       <div className="ontainer pt-4 d-flex justify-content-center align-items-center">
@@ -119,8 +163,8 @@ export const KinderGardensPage = () => {
         </div>
       </div>
 
-      <EditModal isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>
-      <CreateModal isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
+      <EditKinderGarden isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>
+      <CreateKinderGarden isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
     </div>
   )
 }
