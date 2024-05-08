@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQueries } from "react-query";
 import Modal from "../Modal/Modal";
 import Calendar from "react-calendar";
 import 'react-date-picker/dist/DatePicker.css';
@@ -6,6 +7,11 @@ import 'react-calendar/dist/Calendar.css';
 
 //TODO: Fix date when display on calendar
 export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
+
+  const [genders] = useState(['masculino', 'femenino']);
+  const [kinderGardens, setKinderGardens] = useState([{}]);
+  const [ageRanges, setAgeRanges] = useState([{}]);
+
   const [formData, setFormData] = useState({
     id: '',
     rut: '',
@@ -16,7 +22,9 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
     gender: '',
     group: '',
     email: '',
-    state: ''
+    state: '',
+    kinder_garden_id: '',
+    age_range_id: ''
   });
 
   useEffect(() => {
@@ -30,11 +38,28 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
       gender: item.gender,
       group: item.group,
       email: item.email,
-      state: item.state
+      state: item.state,
+      kinder_garden_id: item.kinder_garden_id,
+      age_range_id: item.age_range_id
     });
 
-    console.log('birthday from backend: ', item.birthday);
   }, [item]);
+
+  const fetchData = async (url) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
+
+  const fetchKindergardens = async () => await fetchData('http://localhost:3000/kinder_gardens');
+  const fetchAgeRanges = async () => await fetchData('http://localhost:3000/age_ranges');
+
+  const queries = useQueries([
+    { queryKey: 'fetchKindergardens', queryFn: fetchKindergardens },
+    { queryKey: 'fetchAgeRanges', queryFn: fetchAgeRanges }
+  ]);
+
+  const [kindergartensQuery, ageRangesQuery] = queries;
 
   //TODO: convert this function to a common function between components
   const convertDate = date => {
@@ -67,8 +92,32 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
     gender,
     group,
     email,
-    state
-   } = formData;
+    state,
+    kinder_garden_id,
+    age_range_id
+  } = formData;
+
+  useEffect(() => {
+    if (kindergartensQuery.data) {
+      setKinderGardens(kindergartensQuery.data);
+    }
+    if (ageRangesQuery.data) {
+      setAgeRanges(ageRangesQuery.data);
+    }
+
+    console.log('kindergartensQuery', kindergartensQuery.data);
+    console.log('ageRangesQuery', ageRangesQuery.data);
+
+  }, [kindergartensQuery.data, ageRangesQuery.data])
+
+
+  if (kindergartensQuery.isLoading || ageRangesQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (kindergartensQuery.error || ageRangesQuery.error) {
+    return <div>Error fetching data</div>;
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} onSave={() => onSave(formData)} textButton="Actualizar">
@@ -97,9 +146,16 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
         <Calendar onChange={(date) => onChangeCalendarDate(date)} value={birthday} />
       </div>
 
+      {/* TODO: see if onInputChange can process the change of the select */}
       <div className="form-group">
-        <label htmlFor="gender-input">Sexo</label>
-        <input type="text" name="gender" onChange={onInputChange} value={gender} className="form-control" id="gender-input" aria-describedby="nameHelp"/>
+      <label htmlFor="gender-input">Sexo</label>
+        <select name="gender" onChange={onInputChange} defaultValue={gender} className="form-control" id="gender-input">
+          {
+            genders.map((gender) => (
+              <option key={gender} value={gender}>{gender}</option>
+            ))
+          }
+        </select>
       </div>
 
       <div className="form-group">
@@ -115,6 +171,30 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
       <div className="form-group">
         <label htmlFor="state-input">Estado</label>
         <input type="text" name="state" onChange={onInputChange} value={state} className="form-control" id="state-input" aria-describedby="nameHelp"/>
+      </div>
+
+      {/* TODO: replace with a common component */}
+      <div className="form-group">
+        <label htmlFor="kindergarden-input">Jardín</label>
+        <select name="kinder_garden_id" onChange={onInputChange} defaultValue={kinder_garden_id} className="form-control" id="kindergarden-input">
+          {
+            kinderGardens.map((kinder_garden) => (
+              <option key={kinder_garden.id} value={kinder_garden.id}>{kinder_garden.name}</option>
+            ))
+          }
+        </select>
+      </div>
+        
+      {/* TODO: replace with a common component */}
+      <div className="form-group">
+        <label htmlFor="agerange-input">Rango de Edad</label>
+        <select name="age_range_id" onChange={onInputChange} defaultValue={age_range_id} className="form-control" id="agerange-input">
+          {
+            ageRanges.map((age_range) => (
+              <option key={age_range.id} value={age_range.id}>{age_range.name} {age_range.min_age} años - {age_range.max_age} años</option>
+            ))
+          }
+        </select>
       </div>
     </Modal>
   );

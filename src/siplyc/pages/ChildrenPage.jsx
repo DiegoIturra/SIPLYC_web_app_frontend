@@ -65,7 +65,25 @@ export const ChildrenPage = () => {
 
   //TODO: handle delete item
   const deleteItem = async (id) => {
-    console.log('deleteItem', id)
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch(`http://127.0.0.1:3000/students/${id}`, options);
+
+    if(response.ok) {
+      setItems(prevItems => prevItems.filter(item => item.id !== id))
+      showFlashNotification('success', 'Registro eliminado correctamente')
+      return response;
+    } else {
+      showFlashNotification('danger', 'Error al eliminar el registro')
+      throw new Error('Error al eliminar registro');
+    } 
+    
   }
 
   const properties = [
