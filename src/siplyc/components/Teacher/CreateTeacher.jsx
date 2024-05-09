@@ -19,8 +19,6 @@ export const CreateTeacher = ({ isOpen, onClose, onSave }) => {
       ...formData,
       [ name ]: value
     })
-
-    console.log(value);
   }
 
   return (
