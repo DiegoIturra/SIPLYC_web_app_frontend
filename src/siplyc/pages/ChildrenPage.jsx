@@ -158,8 +158,8 @@ export const ChildrenPage = () => {
         </div>
       </div>
 
-      <CreateChildren isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
-      <EditChildren isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>
+      { createModalOpen && <CreateChildren isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>}
+      { editModalOpen && <EditChildren isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>}
       
     </div>
   )

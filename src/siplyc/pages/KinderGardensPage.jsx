@@ -163,8 +163,8 @@ export const KinderGardensPage = () => {
         </div>
       </div>
 
-      <EditKinderGarden isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>
-      <CreateKinderGarden isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>
+      { editModalOpen && <EditKinderGarden isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>}
+      { createModalOpen && <CreateKinderGarden isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>}
     </div>
   )
 }
