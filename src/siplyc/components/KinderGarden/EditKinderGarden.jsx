@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import Modal from "../Modal/Modal";
+import { Dropdown } from "../../../components/Dropdown";
 
 export const EditKinderGarden = ({ isOpen, onClose, onSave, item }) => {
 
@@ -67,18 +68,16 @@ export const EditKinderGarden = ({ isOpen, onClose, onSave, item }) => {
         <label htmlFor="phone-input">Teléfono</label>
         <input type="text" name="phone" onChange={onInputChange} value={phone} className="form-control" id="phone-input"/>
       </div>
+      
+      <Dropdown 
+        data={cities}
+        title={'Ciudad'}
+        name={'city_id'}
+        value={city_id}
+        onChange={onInputChange}
+        showDefaultOption={false}
+      />
 
-      <div className="form-group">
-        <label htmlFor="city-input">Ciudad</label>
-        <select name="city_id" onChange={onInputChange} value={city_id} className="form-control" id="city-input">
-          <option value={item.city_id}>{item.city_name}</option>
-          {
-            cities.map((city) => (
-              <option key={city.id} value={city.id}>{city.name}</option>
-            ))
-          }
-        </select>
-      </div>
     </Modal>
   );
 }
