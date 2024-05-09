@@ -140,7 +140,7 @@ export const ChildrenPage = () => {
   return (
     <div style={{ backgroundColor: '#00ac96', minHeight: '100vh' }}>
       <FlashNotification message={flashMessage} isVisible={openFlash} type={notificationType} onClose={handleCloseFlash}/>
-      <h1 className="container pt-4 d-flex justify-content-center align-items-center">Ciudades</h1>
+      <h1 className="container pt-4 d-flex justify-content-center align-items-center">Niños</h1>
 
       <div className="ontainer pt-4 d-flex justify-content-center align-items-center">
         <button className="btn btn-primary" onClick={handleOpenCreateModal}>Nuevo +</button>
@@ -158,8 +158,8 @@ export const ChildrenPage = () => {
         </div>
       </div>
 
-      { createModalOpen && <CreateChildren isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>}
-      { editModalOpen && <EditChildren isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>}
+      { createModalOpen && <CreateChildren onClose={handleCloseCreateModal} onSave={handleCreate}/>}
+      { editModalOpen && <EditChildren onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>}
       
     </div>
   )

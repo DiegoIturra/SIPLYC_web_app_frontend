@@ -156,8 +156,8 @@ export const CitiesPage = () => {
         </div>
       </div>
 
-      { createModalOpen && <CreateCity isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>}
-      { editModalOpen && <EditCity isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>}
+      { createModalOpen && <CreateCity onClose={handleCloseCreateModal} onSave={handleCreate}/>}
+      { editModalOpen && <EditCity onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>}
     </div>
   )
 }

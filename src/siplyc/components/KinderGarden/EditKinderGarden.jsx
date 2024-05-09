@@ -3,7 +3,9 @@ import { useQuery } from "react-query";
 import Modal from "../Modal/Modal";
 import { Dropdown } from "../../../components/Dropdown";
 
-export const EditKinderGarden = ({ isOpen, onClose, onSave, item }) => {
+export const EditKinderGarden = ({ onClose, onSave, item }) => {
+
+  console.log('item:', item);
 
   const [cities, setCities] = useState([]);
   const [formData, setFormData] = useState({
@@ -20,7 +22,7 @@ export const EditKinderGarden = ({ isOpen, onClose, onSave, item }) => {
       name: item.name,
       address: item.address,
       phone: item.phone,
-      city: item.city_name
+      city_id: item.city_id
     });
   }, [item]);
 
@@ -53,7 +55,7 @@ export const EditKinderGarden = ({ isOpen, onClose, onSave, item }) => {
   if (error) return 'An error has occurred: ' + error.message
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} onSave={() => onSave(formData)} textButton="Actualizar">
+    <Modal onClose={onClose} onSave={() => onSave(formData)} textButton="Actualizar">
       <div className="form-group">
         <label htmlFor="name-input">Nombre</label>
         <input type="text" name="name" onChange={onInputChange} value={name} className="form-control" id="name-input" aria-describedby="nameHelp"/>

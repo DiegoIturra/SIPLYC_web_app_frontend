@@ -149,8 +149,8 @@ export const TeachersPage = () => {
         </div>
       </div>
 
-      { createModalOpen && <CreateTeacher isOpen={createModalOpen} onClose={handleCloseCreateModal} onSave={handleCreate}/>}
-      { editModalOpen && <EditTeacher isOpen={editModalOpen} onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>}
+      { createModalOpen && <CreateTeacher onClose={handleCloseCreateModal} onSave={handleCreate}/>}
+      { editModalOpen && <EditTeacher onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>}
     </div>  
   )
 } 

@@ -3,7 +3,7 @@ import Modal from "../Modal/Modal";
 import { Dropdown } from "../../../components/Dropdown";
 import { useQuery } from "react-query";
 
-export const CreateKinderGarden = ({ isOpen, onClose, onSave }) => {
+export const CreateKinderGarden = ({ onClose, onSave }) => {
   
   const [formData, setFormData] = useState({
     name: '',
@@ -42,7 +42,7 @@ export const CreateKinderGarden = ({ isOpen, onClose, onSave }) => {
   if (error) return 'An error has occurred: ' + error.message
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} onSave={() => onSave(formData)}>
+    <Modal onClose={onClose} onSave={() => onSave(formData)}>
       <div className="form-group">
         <label htmlFor="name-input">Nombre</label>
         <input type="text" name="name" onChange={onInputChange} value={name} className="form-control" id="name-input" aria-describedby="nameHelp"/>
