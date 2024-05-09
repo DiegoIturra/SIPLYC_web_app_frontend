@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Modal from "../Modal/Modal";
 
-export const EditTeacher = ({ isOpen, onClose, onSave, item }) => {
+export const EditTeacher = ({ onClose, onSave, item }) => {
   const [formData, setFormData] = useState({
     id: '',
     rut: '',
@@ -33,7 +33,7 @@ export const EditTeacher = ({ isOpen, onClose, onSave, item }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} onSave={() => onSave(formData)} textButton="Actualizar">
+    <Modal onClose={onClose} onSave={() => onSave(formData)} textButton="Actualizar">
       <div className="form-group">
         <label htmlFor="rut-input">Rut</label>
         <input type="text" name="rut" onChange={onInputChange} value={rut} className="form-control" id="rut-input" aria-describedby="nameHelp"/>

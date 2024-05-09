@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "../Modal/Modal";
 
-export const CreateTeacher = ({ isOpen, onClose, onSave }) => {
+export const CreateTeacher = ({ onClose, onSave }) => {
   
   const [formData, setFormData] = useState({
     rut: '',
@@ -19,12 +19,10 @@ export const CreateTeacher = ({ isOpen, onClose, onSave }) => {
       ...formData,
       [ name ]: value
     })
-
-    console.log(value);
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} onSave={() => onSave(formData)}>
+    <Modal onClose={onClose} onSave={() => onSave(formData)}>
       <div className="form-group">
         <label htmlFor="rut-input">Rut</label>
         <input type="text" name="rut" onChange={onInputChange} value={rut} className="form-control" id="rut-input" aria-describedby="nameHelp"/>

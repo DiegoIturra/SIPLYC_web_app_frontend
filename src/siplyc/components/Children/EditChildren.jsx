@@ -7,7 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 import { Dropdown } from "../../../components/Dropdown";
 
 //TODO: Fix date when display on calendar
-export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
+export const EditChildren = ({ onClose, onSave, item }) => {
 
   const [genders] = useState(['masculino', 'femenino']);
   const [kinderGardens, setKinderGardens] = useState([{}]);
@@ -121,7 +121,7 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} onSave={() => onSave(formData)} textButton="Actualizar">
+    <Modal onClose={onClose} onSave={() => onSave(formData)} textButton="Actualizar">
       <div className="form-group">
         <label htmlFor="rut-input">Rut</label>
         <input type="text" name="rut" onChange={onInputChange} value={rut} className="form-control" id="rut-input" aria-describedby="nameHelp"/>
@@ -178,7 +178,7 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
         title={'Jardín'}
         name={'kinder_garden_id'}
         onChange={onInputChange} 
-        defaultValue={kinder_garden_id}
+        value={kinder_garden_id}
         showDefaultOption={false}
       />
 
@@ -187,7 +187,7 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
         title={'Rango de edad'}
         name={'age_range_id'}
         onChange={onInputChange} 
-        defaultValue={age_range_id}
+        value={age_range_id}
         showDefaultOption={false}
       />
     </Modal>

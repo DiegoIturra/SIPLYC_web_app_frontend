@@ -1,6 +1,6 @@
 import './Modal.css';
 
-const Modal = ({ isOpen, onClose, onSave, children, textButton = 'Guardar'}) => {
+const Modal = ({ onClose, onSave, children, textButton = 'Guardar'}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -9,19 +9,17 @@ const Modal = ({ isOpen, onClose, onSave, children, textButton = 'Guardar'}) => 
   };
 
   return (
-    isOpen && (
-      <div className="modal-overlay">
-        <div className="modal-content">
-          <form onSubmit={handleSubmit}>
-            {children}
-            <div className="button-container">
-              <button className="btn btn-danger" onClick={onClose}>Cerrar</button>
-              <button className="btn btn-primary" type="submit">{textButton}</button>
-            </div>
-          </form>
-        </div>
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <form onSubmit={handleSubmit}>
+          {children}
+          <div className="button-container">
+            <button className="btn btn-danger" onClick={onClose}>Cerrar</button>
+            <button className="btn btn-primary" type="submit">{textButton}</button>
+          </div>
+        </form>
       </div>
-    )
+    </div>
   );
 }
 
