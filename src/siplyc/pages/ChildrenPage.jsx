@@ -63,7 +63,6 @@ export const ChildrenPage = () => {
     }  
   }
 
-  //TODO: handle delete item
   const deleteItem = async (id) => {
     const options = {
       method: 'DELETE',
