@@ -5,7 +5,6 @@ import { CreateCity } from "../components/City/CreateCity";
 import { EditCity } from "../components/City/EditCity";
 import { FlashNotification } from "../components/FlashNotification";
 
-//TODO: Update page when a new item is created
 export const CitiesPage = () => {
 
   const fetchItems = async () => {
@@ -32,8 +31,10 @@ export const CitiesPage = () => {
     if(response.ok) {
       const data = await response.json();
       setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
+      showFlashNotification('success', 'Registro actualizado correctamente')
       return data;
     } else {
+      showFlashNotification('danger', 'Error al actualizar el registro')
       throw new Error('Error al actualizar el registro');
     }   
   }
@@ -52,9 +53,11 @@ export const CitiesPage = () => {
 
     if(response.ok) {
       const data = await response.json();
-      setItems(prevItems => prevItems.map(item => item.id === data.id ? data : item));
+      setItems([...items, data]);
+      showFlashNotification('success', 'Registro creado correctamente')
       return data;
     } else {
+      showFlashNotification('danger', 'Error al crear el registro')
       throw new Error('Error al crear registro');
     }  
   }
