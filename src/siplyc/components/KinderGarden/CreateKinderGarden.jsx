@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Modal from "../Modal/Modal";
+import { Dropdown } from "../../../components/Dropdown";
 import { useQuery } from "react-query";
 
-//TODO: Update page when a new item is created
 export const CreateKinderGarden = ({ isOpen, onClose, onSave }) => {
   
   const [formData, setFormData] = useState({
@@ -58,17 +58,15 @@ export const CreateKinderGarden = ({ isOpen, onClose, onSave }) => {
         <input type="text" name="phone" onChange={onInputChange} value={phone} className="form-control" id="phone-input"/>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="city-input">Ciudad</label>
-        <select name="city_id" onChange={onInputChange} value={city_id} className="form-control" id="city-input">
-          <option value="">Seleccione una ciudad</option>
-          {
-            cities.map((city) => (
-              <option key={city.id} value={city.id}>{city.name}</option>
-            ))
-          }
-        </select>
-      </div>
+      <Dropdown 
+        data={cities}
+        title={'Ciudad'}
+        name={'city_id'}
+        value={city_id}
+        onChange={onInputChange}
+        showDefaultOption={true}
+      />
+
     </Modal>
   );
 }

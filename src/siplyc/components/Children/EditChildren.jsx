@@ -4,6 +4,7 @@ import Modal from "../Modal/Modal";
 import Calendar from "react-calendar";
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import { Dropdown } from "../../../components/Dropdown";
 
 //TODO: Fix date when display on calendar
 export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
@@ -146,7 +147,6 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
         <Calendar onChange={(date) => onChangeCalendarDate(date)} value={birthday} />
       </div>
 
-      {/* TODO: see if onInputChange can process the change of the select */}
       <div className="form-group">
       <label htmlFor="gender-input">Sexo</label>
         <select name="gender" onChange={onInputChange} defaultValue={gender} className="form-control" id="gender-input">
@@ -157,7 +157,7 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
           }
         </select>
       </div>
-
+      
       <div className="form-group">
         <label htmlFor="group-input">Grupo</label>
         <input type="text" name="group" onChange={onInputChange} value={group} className="form-control" id="group-input" aria-describedby="nameHelp"/>
@@ -173,29 +173,23 @@ export const EditChildren = ({ isOpen, onClose, onSave, item }) => {
         <input type="text" name="state" onChange={onInputChange} value={state} className="form-control" id="state-input" aria-describedby="nameHelp"/>
       </div>
 
-      {/* TODO: replace with a common component */}
-      <div className="form-group">
-        <label htmlFor="kindergarden-input">Jardín</label>
-        <select name="kinder_garden_id" onChange={onInputChange} defaultValue={kinder_garden_id} className="form-control" id="kindergarden-input">
-          {
-            kinderGardens.map((kinder_garden) => (
-              <option key={kinder_garden.id} value={kinder_garden.id}>{kinder_garden.name}</option>
-            ))
-          }
-        </select>
-      </div>
-        
-      {/* TODO: replace with a common component */}
-      <div className="form-group">
-        <label htmlFor="agerange-input">Rango de Edad</label>
-        <select name="age_range_id" onChange={onInputChange} defaultValue={age_range_id} className="form-control" id="agerange-input">
-          {
-            ageRanges.map((age_range) => (
-              <option key={age_range.id} value={age_range.id}>{age_range.name} {age_range.min_age} años - {age_range.max_age} años</option>
-            ))
-          }
-        </select>
-      </div>
+      <Dropdown 
+        data={kinderGardens} 
+        title={'Jardín'}
+        name={'kinder_garden_id'}
+        onChange={onInputChange} 
+        defaultValue={kinder_garden_id}
+        showDefaultOption={false}
+      />
+
+      <Dropdown 
+        data={ageRanges} 
+        title={'Rango de edad'}
+        name={'age_range_id'}
+        onChange={onInputChange} 
+        defaultValue={age_range_id}
+        showDefaultOption={false}
+      />
     </Modal>
   );
 }
