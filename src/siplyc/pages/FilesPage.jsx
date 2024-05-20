@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { FileUploader } from "../../components/FileUploader/FileUploader"
 import { FlashNotification } from "../components/FlashNotification";
+import { useNavigate } from "react-router-dom";
 
 export const FilesPage = () => {
+
+  const navigate = useNavigate();
 
   const [flashMessage, setFlashMessage] = useState('');
   const [openFlash, setOpenFlash] = useState(false);
@@ -12,6 +15,10 @@ export const FilesPage = () => {
     setOpenFlash(true);
     setNotificationType('success');
     setFlashMessage('Datos subidos correctamente');
+    
+    setTimeout(() => {
+      navigate('/home', { replace: true });
+    }, 2000);
   }
 
   const showErrorNotification = () => {
