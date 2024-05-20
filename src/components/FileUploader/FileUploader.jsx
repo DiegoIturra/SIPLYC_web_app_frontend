@@ -2,9 +2,11 @@ import { useState } from "react";
 import * as XLSX from 'xlsx';
 import './FileUploader.css';
 import { Table } from "../Table/Table";
+import { PacmanLoader} from "react-spinners";
 
 export const FileUploader = ({ onSuccess, onError }) => {
   const [excelData, setExcelData] = useState([]);
+  const [isSpinnerLoading, setIsSpinnerLoading] = useState(false);
 
   const createPayload = () => {
     const payload = [];
@@ -47,14 +49,19 @@ export const FileUploader = ({ onSuccess, onError }) => {
     }
 
     //TODO: replace raw string with enviroment variable
-    const response = await fetch('http://localhost:3000/process_files/process_excel_file', options);
+    try {
+      setIsSpinnerLoading(true);
+      const response = await fetch('http://localhost:3000/process_files/process_excel_file', options);
 
-    if(response.ok) {
-      await response.json();
-      onSuccess();
-    } else {
-      console.log('Error al enviar los datos');
+      if(response.ok) {
+        await response.json();
+        onSuccess();
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
       onError();
+    } finally {
+      setIsSpinnerLoading(false);
     }
 
   }
@@ -82,6 +89,11 @@ export const FileUploader = ({ onSuccess, onError }) => {
 
   return (
     <div className="main-container">
+      {isSpinnerLoading && (
+        <div className="spinner-overlay">
+          <PacmanLoader size={90} color={"#36d7b7"} loading={isSpinnerLoading} />
+        </div>
+      )}
 
       <div className="uploader-container">
 
