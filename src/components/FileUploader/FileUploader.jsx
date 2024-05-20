@@ -3,7 +3,7 @@ import * as XLSX from 'xlsx';
 import './FileUploader.css';
 import { Table } from "../Table/Table";
 
-export const FileUploader = () => {
+export const FileUploader = ({ onSuccess, onError }) => {
   const [excelData, setExcelData] = useState([]);
 
   const createPayload = () => {
@@ -14,14 +14,14 @@ export const FileUploader = () => {
         const [ciudad, jardin, nombres, apellido_paterno, apellido_materno, rut, grupo_edad, educadora] = row;
   
         const json = {
-          ciudad,
-          jardin,
-          nombres,
-          apellido_paterno,
-          apellido_materno,
-          rut,
-          grupo_edad,
-          educadora,
+          city: ciudad,
+          kinder_garden: jardin,
+          names: nombres,
+          father_lastname: apellido_paterno,
+          mother_lastname: apellido_materno,
+          rut: rut,
+          age_range: grupo_edad,
+          teacher: educadora,
         };
   
         payload.push(json);
@@ -31,6 +31,32 @@ export const FileUploader = () => {
     payload.map(el => console.log(el))
 
     return payload;
+  }
+
+  const sendData = async () => {
+    const payload = {
+      data: createPayload()
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }
+
+    //TODO: replace raw string with enviroment variable
+    const response = await fetch('http://localhost:3000/process_files/process_excel_file', options);
+
+    if(response.ok) {
+      await response.json();
+      onSuccess();
+    } else {
+      console.log('Error al enviar los datos');
+      onError();
+    }
+
   }
 
   const handleFileChange = e => {
@@ -74,7 +100,7 @@ export const FileUploader = () => {
         excelData.length > 0 && (
           <>
             <Table data={excelData}/>
-            <button className="upload-file-button" onClick={createPayload}> Upload </button>
+            <button className="upload-file-button" onClick={sendData}> Upload </button>
           </>
         )
       }
