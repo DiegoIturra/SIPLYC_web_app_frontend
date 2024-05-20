@@ -17,7 +17,7 @@ export const FilesPage = () => {
     setFlashMessage('Datos subidos correctamente');
     
     setTimeout(() => {
-      navigate('/home', { replace: true });
+      navigate('/children', { replace: true });
     }, 2000);
   }
 
