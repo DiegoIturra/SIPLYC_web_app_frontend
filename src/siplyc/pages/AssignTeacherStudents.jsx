@@ -42,6 +42,12 @@ export const AssignTeacherStudents = () => {
 
   const handleCloseFlash = () => setOpenFlash(false);
 
+  const showFlashNotification = (type = 'success', message = '') => {
+    setOpenFlash(true);
+    setNotificationType(type);
+    setFlashMessage(message);
+  }
+
   // Modal options
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -55,9 +61,72 @@ export const AssignTeacherStudents = () => {
 
   const handleCloseEditModal = () => setEditModalOpen(false);
 
-  const handleCreate = async (formData) => log('Create:', formData); //TODO: Implement create
-  const handleUpdate = async (formData) => console.log('Update:', formData); //TODO: Implement update
-  const handleDelete = async (id) => console.log('Delete:', id); //TODO: Implement delete
+  const updateItem = async (item) => {
+    const id = item.id;
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    }
+
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch(`http://localhost:3000/teacher_students/${id}`, options);
+
+    if(response.ok) {
+      const data = await response.json();
+
+      const newItem = {
+        ...data,
+
+        teacher: {
+          ...data.teacher,
+          names: data.teacher.names
+        },
+
+        student: {
+          ...data.student,
+          names: data.student.names,
+          father_lastname: data.student.father_lastname,
+          mother_lastname: data.student.mother_lastname
+        }
+      }
+
+      setItems(prevItems => prevItems.map(item => item.id === newItem.id ? newItem : item));
+      showFlashNotification('success', 'Registro actualizado correctamente')
+      return data;
+    } else {
+      showFlashNotification('danger', 'Error al actualizar el registro')
+      throw new Error('Error al actualizar el registro');
+    }   
+  }
+
+  const deleteItem = async (id) => {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch(`http://127.0.0.1:3000/teacher_students/${id}`, options);
+
+    if(response.ok) {
+      setItems(prevItems => prevItems.filter(item => item.id !== id))
+      showFlashNotification('success', 'Registro eliminado correctamente')
+      return response;
+    } else {
+      showFlashNotification('danger', 'Error al eliminar el registro')
+      throw new Error('Error al eliminar registro');
+    } 
+  }
+
+  const handleCreate = async (formData) => console.log('Create:', formData); //TODO: Implement create
+  const handleUpdate = async (formData) => await updateItem(formData);
+  const handleDelete = async (id) => await deleteItem(id);
 
 
   // TODO: Replace raw string with enviroment variable
