@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { Paginate } from "../components/Paginate";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FlashNotification } from "../components/FlashNotification";
+import { CreateAssingTeachersStudent } from "../components/AssignTeachersStudent/CreateAssingTeachersStudent";
 import { EditAssingTeachersStudent } from "../components/AssignTeachersStudent/EditAssignTeachersStudent";
 
 export const AssignTeacherStudents = () => {
@@ -59,7 +60,50 @@ export const AssignTeacherStudents = () => {
     setItem(item)
   };
 
+  const handleOpenCreateModal = () => setCreateModalOpen(true);
+  const handleCloseCreateModal = () => setCreateModalOpen(false);
   const handleCloseEditModal = () => setEditModalOpen(false);
+
+  const createItem = async (item) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    }
+
+    // TODO: Replace raw string with enviroment variable
+    const response = await fetch('http://127.0.0.1:3000/teacher_students', options);
+
+    if(response.ok) {
+      const data = await response.json();
+
+      const newItem = {
+        ...data,
+
+        teacher: {
+          ...data.teacher,
+          names: data.teacher.names
+        },
+
+        student: {
+          ...data.student,
+          names: data.student.names,
+          father_lastname: data.student.father_lastname,
+          mother_lastname: data.student.mother_lastname
+        }
+      }
+
+      setItems([...items, newItem]);
+      showFlashNotification('success', 'Registro creado correctamente')
+      return data
+    } else {
+      showFlashNotification('danger', 'Error al crear el registro')
+      throw new Error('Error al crear registro');
+    }  
+
+  }
 
   const updateItem = async (item) => {
     const id = item.id;
@@ -124,7 +168,7 @@ export const AssignTeacherStudents = () => {
     } 
   }
 
-  const handleCreate = async (formData) => console.log('Create:', formData); //TODO: Implement create
+  const handleCreate = async (formData) => await createItem(formData);
   const handleUpdate = async (formData) => await updateItem(formData);
   const handleDelete = async (id) => await deleteItem(id);
 
@@ -159,7 +203,7 @@ export const AssignTeacherStudents = () => {
       <h1 className="container pt-4 d-flex justify-content-center align-items-center">Asignaciones Tutor - Niño</h1>
 
       <div className="container pt-4 d-flex justify-content-center align-items-center">
-        {/* <button className="btn btn-primary" onClick={handleOpenCreateModal}>Nuevo +</button> */}
+        <button className="btn btn-primary" onClick={handleOpenCreateModal}>Nuevo +</button>
       </div>
 
       <div className="container mt-4 pb-4 d-flex justify-content-center align-items-center">
@@ -186,7 +230,7 @@ export const AssignTeacherStudents = () => {
 
       </div>
 
-      {/* { createModalOpen && <CreateChildren onClose={handleCloseCreateModal} onSave={handleCreate}/>} */}
+      { createModalOpen && <CreateAssingTeachersStudent onClose={handleCloseCreateModal} onSave={handleCreate}/>}
       { editModalOpen && <EditAssingTeachersStudent onClose={handleCloseEditModal} onSave={handleUpdate} item={item}/>}
       
     </div>
