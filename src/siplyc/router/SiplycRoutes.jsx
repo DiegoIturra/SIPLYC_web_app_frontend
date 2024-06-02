@@ -24,7 +24,7 @@ export const SiplycRoutes = () => {
           <Route path="graphics" element={<GraphicsPage/>}/>
           <Route path="cities" element={<CitiesPage/>}/>
           <Route path="assing_teacher_student" element={<AssignTeacherStudents/>}/>
-          <Route path="/" element={<Navigate to="/home" />}/>
+          <Route path="/" element={<Navigate to="/login" />}/>
         </Routes>
       </div>
     </>
