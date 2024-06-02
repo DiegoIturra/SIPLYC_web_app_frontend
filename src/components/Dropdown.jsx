@@ -1,4 +1,4 @@
-export const Dropdown = ({data, title, name, value, onChange, showDefaultOption}) => {  
+export const Dropdown = ({data, title, name, keyName = 'name', value, onChange, showDefaultOption}) => {  
   return (
     <div className="form-group">
       <label htmlFor="dropdown-input">{title}</label>
@@ -6,7 +6,7 @@ export const Dropdown = ({data, title, name, value, onChange, showDefaultOption}
         {showDefaultOption && <option value="">Selecciona un {title}</option>}
         {
           data.map((element) => (
-            <option key={element.id} value={element.id}>{element.name}</option>
+            <option key={element.id} value={element.id}>{element[keyName]}</option>
           ))
         }
       </select>

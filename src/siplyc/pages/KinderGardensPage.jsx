@@ -153,7 +153,7 @@ export const KinderGardensPage = () => {
 
       <h1 className="container pt-4 d-flex justify-content-center align-items-center">Jardines</h1>
 
-      <div className="ontainer pt-4 d-flex justify-content-center align-items-center">
+      <div className="container pt-4 d-flex justify-content-center align-items-center">
         <button className="btn btn-primary" onClick={handleOpenCreateModal}>Nuevo +</button>
       </div>
 

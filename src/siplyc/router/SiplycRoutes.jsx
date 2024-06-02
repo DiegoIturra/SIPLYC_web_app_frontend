@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 import { NavBar } from "../../components/Navbar"
+import { AssignTeacherStudents } from "../pages/AssignTeacherStudents"
 import { HomePage } from "../pages/HomePage"
 import { ChildrenPage } from "../pages/ChildrenPage"
 import { KinderGardensPage } from "../pages/KinderGardensPage"
@@ -22,6 +23,7 @@ export const SiplycRoutes = () => {
           <Route path="files" element={<FilesPage/>}/>
           <Route path="graphics" element={<GraphicsPage/>}/>
           <Route path="cities" element={<CitiesPage/>}/>
+          <Route path="assing_teacher_student" element={<AssignTeacherStudents/>}/>
           <Route path="/" element={<Navigate to="/home" />}/>
         </Routes>
       </div>
