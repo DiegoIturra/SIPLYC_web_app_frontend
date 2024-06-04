@@ -16,7 +16,7 @@ export const Table = ({ data }) => {
             <th scope="col">Apellido Materno</th>
             <th scope="col">Rut</th>
             <th scope="col">Grupo Edad</th>
-            <th scope="col">Educadora</th>
+            <th scope="col">Tablet</th>
           </tr>
         </thead>
 

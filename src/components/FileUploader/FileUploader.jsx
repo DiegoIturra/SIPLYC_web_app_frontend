@@ -13,7 +13,7 @@ export const FileUploader = ({ onSuccess, onError }) => {
   
     excelData.forEach((row, index) => {
       if (index > 1) {
-        const [ciudad, jardin, nombres, apellido_paterno, apellido_materno, rut, grupo_edad, educadora] = row;
+        const [ciudad, jardin, nombres, apellido_paterno, apellido_materno, rut, grupo_edad, tablet] = row;
   
         const json = {
           city: ciudad,
@@ -23,7 +23,7 @@ export const FileUploader = ({ onSuccess, onError }) => {
           mother_lastname: apellido_materno,
           rut: rut,
           age_range: grupo_edad,
-          teacher: educadora,
+          tablet: tablet,
         };
   
         payload.push(json);
