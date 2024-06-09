@@ -1,13 +1,14 @@
-import { Routes, Route, Navigate } from "react-router-dom"
-import { NavBar } from "../../components/Navbar"
 import { AssignTeacherStudents } from "../pages/AssignTeacherStudents"
-import { HomePage } from "../pages/HomePage"
 import { ChildrenPage } from "../pages/ChildrenPage"
-import { KinderGardensPage } from "../pages/KinderGardensPage"
-import { TeachersPage } from "../pages/TeachersPage"
+import { CitiesPage } from "../pages/CitiesPage"
 import { FilesPage } from "../pages/FilesPage"
 import { GraphicsPage } from "../pages/GraphicsPage"
-import { CitiesPage } from "../pages/CitiesPage"
+import { HomePage } from "../pages/HomePage"
+import { KinderGardensPage } from "../pages/KinderGardensPage"
+import { NavBar } from "../../components/Navbar"
+import { Routes, Route, Navigate } from "react-router-dom"
+import { Sessions } from "../pages/Sessions"
+import { TeachersPage } from "../pages/TeachersPage"
 
 export const SiplycRoutes = () => {
   return(
@@ -24,6 +25,7 @@ export const SiplycRoutes = () => {
           <Route path="graphics" element={<GraphicsPage/>}/>
           <Route path="cities" element={<CitiesPage/>}/>
           <Route path="assing_teacher_student" element={<AssignTeacherStudents/>}/>
+          <Route path="sessions" element={<Sessions/>}/>
           <Route path="/" element={<Navigate to="/login" />}/>
         </Routes>
       </div>

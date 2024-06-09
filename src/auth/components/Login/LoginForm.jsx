@@ -29,7 +29,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const onLogin = () => {
-    navigate('/home', {
+    navigate('/files', {
       replace: true
     })
   }

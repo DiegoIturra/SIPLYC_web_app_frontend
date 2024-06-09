@@ -30,7 +30,7 @@ export const NavBar = () => {
               <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a className="dropdown-item" href="/cities">Ciudades</a>
                 <a className="dropdown-item" href="/assing_teacher_student">Asignaciones</a>
-                <a className="dropdown-item" href="#">Something else here</a>
+                <a className="dropdown-item" href="/sessions">Sesiones</a>
               </div>
             </li>
           </div>
