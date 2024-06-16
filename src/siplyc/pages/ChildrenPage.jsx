@@ -1,11 +1,23 @@
 import { List } from "../components/List";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
+import { Paginate } from "../components/Paginate";
+import { useLocation, useNavigate } from "react-router-dom";
 import { CreateChildren } from "../components/Children/CreateChildren";
 import { EditChildren } from "../components/Children/EditChildren";
 import { FlashNotification } from "../components/FlashNotification";
 
 export const ChildrenPage = () => {
+
+  // Paginated Records
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasNext, setHasNext] = useState(false);
+  const [hasPrev, setHasPrev] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
+  const page = parseInt(searchParams.get('page')) || 1;
 
   const [items, setItems] = useState([]);
   const [item, setItem] = useState('');
@@ -14,6 +26,14 @@ export const ChildrenPage = () => {
   const [openFlash, setOpenFlash] = useState(false);
   const [notificationType, setNotificationType] = useState('success');
   const [flashMessage, setFlashMessage] = useState('');
+
+  // Redirect to first page if no page query param is present
+  useEffect(() => {
+    if (!searchParams.has('page')) {
+      searchParams.set('page', '1');
+      navigate(`${location.pathname}?${searchParams.toString()}`, { replace: true });
+    }
+  }, [location, navigate, searchParams]);
 
   const updateItem = async (item) => {
     const id = item.id;
@@ -119,14 +139,20 @@ export const ChildrenPage = () => {
     setFlashMessage(message);
   }
 
-  const fetchItems = async () => {
     // TODO: Replace raw string with enviroment variable
-    const response = await fetch('http://127.0.0.1:3000/students')
-    const data = await response.json()
-    return data
-  }
-
-  const { isLoading, error, data } = useQuery('fetchTeachers', fetchItems);
+    const fetchItems = async ({ queryKey }) => {
+      // eslint-disable-next-line no-unused-vars
+      const [_key, { page }] = queryKey;
+      const response = await fetch(`http://localhost:3000/students/paginated?page=${page}&per_page=10`);
+      const data = await response.json();
+      setTotalPages(data.total_pages);
+      setCurrentPage(data.current_page);
+      setHasNext(data.has_next);
+      setHasPrev(data.has_prev);
+      return data.students;
+    };
+  
+    const { isLoading, error, data } = useQuery(['fetch_assignments', { page }], fetchItems);
 
   useEffect(() => {
     if (data) {
@@ -156,6 +182,15 @@ export const ChildrenPage = () => {
             handleOpenModal={handleOpenEditModal}
           />
         </div>
+      </div>
+
+      <div className="container d-flex justify-content-center align-items-center">
+        <Paginate 
+          currentPage={currentPage} 
+          totalPages={totalPages} 
+          hasNext={hasNext} 
+          hasPrev={hasPrev} 
+        />
       </div>
 
       { createModalOpen && <CreateChildren onClose={handleCloseCreateModal} onSave={handleCreate}/>}
