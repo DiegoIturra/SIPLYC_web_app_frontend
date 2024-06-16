@@ -9,7 +9,7 @@ const getTotalSessions = (sessions) => sessions.length;
 const getCompletedSessions = (sessions) => sessions.filter(session => session.state === 'complete').length;
 const getIncompleteSessions = (sessions) => sessions.filter(session => session.state === 'incomplete').length;
 
-export const Sessions = () => {
+export const SessionsPage = () => {
 
   const properties = [
     { label: 'Niño(a)', key: 'student.names' },

@@ -7,7 +7,7 @@ import { HomePage } from "../pages/HomePage"
 import { KinderGardensPage } from "../pages/KinderGardensPage"
 import { NavBar } from "../../components/Navbar"
 import { Routes, Route, Navigate } from "react-router-dom"
-import { Sessions } from "../pages/Sessions"
+import { SessionsPage } from "../pages/SessionsPage"
 import { TeachersPage } from "../pages/TeachersPage"
 
 export const SiplycRoutes = () => {
@@ -25,7 +25,7 @@ export const SiplycRoutes = () => {
           <Route path="graphics" element={<GraphicsPage/>}/>
           <Route path="cities" element={<CitiesPage/>}/>
           <Route path="assing_teacher_student" element={<AssignTeacherStudents/>}/>
-          <Route path="sessions" element={<Sessions/>}/>
+          <Route path="sessions" element={<SessionsPage/>}/>
           <Route path="/" element={<Navigate to="/login" />}/>
         </Routes>
       </div>
