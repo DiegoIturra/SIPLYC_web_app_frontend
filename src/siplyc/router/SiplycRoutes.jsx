@@ -5,15 +5,15 @@ import { FilesPage } from "../pages/FilesPage"
 import { GraphicsPage } from "../pages/GraphicsPage"
 import { HomePage } from "../pages/HomePage"
 import { KinderGardensPage } from "../pages/KinderGardensPage"
-import { NavBar } from "../../components/Navbar"
 import { Routes, Route, Navigate } from "react-router-dom"
 import { SessionsPage } from "../pages/SessionsPage"
 import { TeachersPage } from "../pages/TeachersPage"
+import { Sidebar } from "../components/Sidebar/Sidebar"
 
 export const SiplycRoutes = () => {
   return(
     <>
-      <NavBar/>
+      <Sidebar/>
 
       <div>
         <Routes>

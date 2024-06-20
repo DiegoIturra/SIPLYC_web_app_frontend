@@ -18,7 +18,7 @@ export const Sidebar = () => {
           </a>
         </li>
 
-        <li className='nav-item'>
+        <li className='nav-item' data-tooltip-id="my-tooltip" data-tooltip-content="Niños">
           <a href="/children" className='nav-link'>
             {isVisible ? 
               <span><i className="fa-solid fa-children"></i>Niños</span> : 
@@ -27,7 +27,7 @@ export const Sidebar = () => {
           </a>
         </li>
 
-        <li className='nav-item'>
+        <li className='nav-item' data-tooltip-id="my-tooltip2" data-tooltip-content="ASociaciones">
           <a href="/kinderGardens" className='nav-link'>
             {isVisible ? 
               <span><i className="fa-solid fa-school"></i>Jardines</span> : 
@@ -64,9 +64,18 @@ export const Sidebar = () => {
         </li>
 
         <li className='nav-item'>
+          <a href="/sessions" className='nav-link'>
+            {isVisible ? 
+              <span><i className="fa-solid fa-users"></i>Sesiones</span> : 
+              <i className="fa-solid fa-users"></i>
+            }
+          </a>
+        </li>
+
+        <li className='nav-item'>
           <a href="/login" className='nav-link'>
             {isVisible ? 
-              <span><i className="fa-solid fa-right-from-bracket"></i>Logout</span> :
+              <span><i className="fa-solid fa-right-from-bracket" style={{ rotate: "-180deg" }}></i>Logout</span> :
               <i className="fa-solid fa-right-from-bracket"></i>
             }
           </a>

@@ -22,11 +22,11 @@
 }
 
 .side-nav.collapsed {
-  width: 5rem; /* Ancho al colapsar */
+  width: 5rem;
 }
 
 .side-nav.expanded {
-  width: 16rem; /* Ancho al expandir */
+  width: 16rem;
 }
 
 .navbar-nav {
