@@ -76,7 +76,7 @@ export const Sidebar = () => {
           <a href="/login" className='nav-link'>
             {isVisible ? 
               <span><i className="fa-solid fa-right-from-bracket" style={{ rotate: "-180deg" }}></i>Logout</span> :
-              <i className="fa-solid fa-right-from-bracket"></i>
+              <i className="fa-solid fa-right-from-bracket" style={{ rotate: "-180deg" }}></i>
             }
           </a>
         </li>
