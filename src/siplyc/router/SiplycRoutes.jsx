@@ -9,10 +9,12 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import { SessionsPage } from "../pages/SessionsPage"
 import { TeachersPage } from "../pages/TeachersPage"
 import { Sidebar } from "../components/Sidebar/Sidebar"
+import { NavBar } from "../../components/Navbar/Navbar"
 
 export const SiplycRoutes = () => {
   return(
     <>
+      <NavBar/>
       <Sidebar/>
 
       <div>
