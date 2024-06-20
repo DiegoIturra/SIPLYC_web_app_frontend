@@ -18,7 +18,7 @@ export const Sidebar = () => {
           </a>
         </li>
 
-        <li className='nav-item' data-tooltip-id="my-tooltip" data-tooltip-content="Niños">
+        <li className='nav-item' data-toggle="tooltip" data-placement="right" title="Tooltip on right">
           <a href="/children" className='nav-link'>
             {isVisible ? 
               <span><i className="fa-solid fa-children"></i>Niños</span> : 
@@ -27,7 +27,7 @@ export const Sidebar = () => {
           </a>
         </li>
 
-        <li className='nav-item' data-tooltip-id="my-tooltip2" data-tooltip-content="ASociaciones">
+        <li className='nav-item'>
           <a href="/kinderGardens" className='nav-link'>
             {isVisible ? 
               <span><i className="fa-solid fa-school"></i>Jardines</span> : 
