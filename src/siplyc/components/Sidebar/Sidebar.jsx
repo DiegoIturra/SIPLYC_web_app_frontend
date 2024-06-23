@@ -1,9 +1,21 @@
 import './Sidebar.css'
 import { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../../auth/context';
+import { useNavigate } from 'react-router-dom';
 
 export const Sidebar = () => {
 
   const [isVisible, setIsVisible] = useState(false);
+  const { logout } = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  const onLogout = () => {
+    logout();
+    navigate('/login', {
+      replace: true
+    })
+  }
 
   const handleOpenSideBar = () => setIsVisible(!isVisible);
 
@@ -72,8 +84,8 @@ export const Sidebar = () => {
           </a>
         </li>
 
-        <li className='nav-item'>
-          <a href="/login" className='nav-link'>
+        <li className='nav-item' onClick={ onLogout }>
+          <a className='nav-link'>
             {isVisible ? 
               <span><i className="fa-solid fa-right-from-bracket" style={{ rotate: "-180deg" }}></i>Logout</span> :
               <i className="fa-solid fa-right-from-bracket" style={{ rotate: "-180deg" }}></i>

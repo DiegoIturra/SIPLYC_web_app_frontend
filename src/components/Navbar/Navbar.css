@@ -27,6 +27,14 @@
   cursor: pointer;
 }
 
+.right-container p {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
 .right-container .user-image-container img {
   width: 2.5rem;
   height: 2.5rem;

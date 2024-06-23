@@ -49,6 +49,7 @@
 
 .nav-item:last-child {
   margin-top: auto;
+  cursor: pointer;
 }
 
 .nav-link {

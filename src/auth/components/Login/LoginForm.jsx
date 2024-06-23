@@ -1,34 +1,30 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context';
 import { useForm } from '../../../hooks/useForm';
 import './LoginForm.css'
 
 const LoginForm = () => {
+
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const { email, password, onInputChange } = useForm({
     email: '',
     password: '',
   })
 
-  const [ credentials, setCredentials ] = useState({
-    email: '',
-    password: ''
-  })
-
-  const onFormSubmit = (event) => {
+  const onFormSubmit = async (event) => {
     event.preventDefault()
 
-    console.log(credentials); //Delete unnecesary log
+    //TODO: implement this later
+    //const lastPath = localStorage.getItem('lastPath');
 
-    setCredentials({
-      email,
-      password
-    })
-  }
+    // TODO: Implement login with credentials in the backend
+    const canLogin = await login(email, password)
 
-  const navigate = useNavigate();
+    if(!canLogin) return;
 
-  const onLogin = () => {
     navigate('/files', {
       replace: true
     })
@@ -49,7 +45,7 @@ const LoginForm = () => {
           
           <h4>Sign In</h4>
 
-          <form onChange={onFormSubmit} className='form'>
+          <form onSubmit={onFormSubmit} className='form'>
 
             <input 
               type="text" 
@@ -72,7 +68,6 @@ const LoginForm = () => {
             <button 
               type="submit" 
               className="login-button"
-              onClick={onLogin}
             >
             Log in
             </button>

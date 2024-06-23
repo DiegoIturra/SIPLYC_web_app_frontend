@@ -1,7 +1,11 @@
+import { useContext } from 'react'
+import { AuthContext } from '../../auth/context'
 import './Navbar.css'
 
 export const NavBar = () => {
 
+  const { user } = useContext(AuthContext)
+  
   return (
     <>
       <nav className="nav">
@@ -11,6 +15,8 @@ export const NavBar = () => {
         </div>
 
         <div className="right-container">
+
+          <p>{user?.names}</p>
           <i className="fa-solid fa-bell"></i>
 
           <div className="user-image-container">
