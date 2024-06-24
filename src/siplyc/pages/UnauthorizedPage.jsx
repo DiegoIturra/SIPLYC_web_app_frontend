@@ -1,8 +1,10 @@
+import './styles.css'
+
 export const UnauthorizedPage = () => {
   return (
-    <div>
-      <h1>Unauthorized</h1>
-      <p>You are not authorized to access this page.</p>
+    <div className="unauthorized-container" >
+      <img src="/img/unauthorized.jpg" alt="unauthorized image"/>
+      <h4>Regresar al <a href="/login">Login</a></h4>
     </div>
   )
 }
